@@ -5,4 +5,5 @@ class Artist
   field :large_art, type: String
   field :biography, type: String
   has_many :albums
+  has_many :songs
 end

@@ -4,4 +4,5 @@ class Album
   field :year, type: Integer
   field :track_list, type: Array
   belongs_to :artist
+  has_many :songs
 end

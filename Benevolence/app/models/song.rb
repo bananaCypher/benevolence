@@ -16,16 +16,4 @@ class Song
   def file_path
     BASE_FILE_PATH + self.id + '.mp3'
   end
-
-  def to_json
-    object = {
-      title: self.title,
-      duration: self.duration,
-      artist: self.artist.id,
-      album: self.album.id,
-      url: self.file_url
-    }
-    return object.to_json
-  end
 end
-

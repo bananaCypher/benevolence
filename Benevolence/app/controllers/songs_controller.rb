@@ -16,6 +16,13 @@ class SongsController < ApplicationController
     render json: song, methods: :file_url
   end
 
+  def update
+    song = Song.find(params[:id])
+    song.update(song_params)
+    song.save
+    render json: song, methods: :file_url
+  end
+
   def destroy
     song = Song.find(params[:id])
     song.destroy

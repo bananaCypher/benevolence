@@ -5,6 +5,8 @@ describe Artist do
     @artist = Artist.new(name: 'An Artist')
     @small_art = 'http://lorempixel.com/200/200/'
     @large_art = 'http://lorempixel.com/1000/600/' 
+    @default_small = '/logo.png'
+    @default_large = '/space.jpg'
     @biography = 'This is a test artist.'
     @album1 = Album.new()
     @album2 = Album.new()
@@ -24,10 +26,10 @@ describe Artist do
     expect(@artist.large_art).to eq('http://lorempixel.com/1000/600/')
   end
   it "should have a default small art if none given" do
-    pending
+    expect(@artist.small_art).to eq(@default_small)
   end
   it "should have a default large art if none given" do
-    pending
+    expect(@artist.large_art).to eq(@default_large)
   end
   it "can have biography" do
     @artist.biography = @biography

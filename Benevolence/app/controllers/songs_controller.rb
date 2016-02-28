@@ -6,12 +6,8 @@ class SongsController < ApplicationController
   end
 
   def show
-    song = Song.find(params[:id])
-    if song
-      render json: Song.find(params[:id]), methods: :file_url
-    else
-      render json: {status: 'error', message: 'Song not found'}
-    end
+    song = get_song || return
+    render json: Song.find(params[:id]), methods: :file_url
   end
 
   def create
@@ -26,10 +22,10 @@ class SongsController < ApplicationController
   end
 
   def update
-    song = Song.find(params[:id])
+    song = get_song || return
     song.update(song_params)
     song.save
-    render json: song, methods: :file_url
+    render json: {status: 'success', message: 'Song was successfully updated'}
   end
 
   def destroy
@@ -41,5 +37,15 @@ class SongsController < ApplicationController
   private
   def song_params
     params.require(:song).permit(:title)
+  end
+
+  def render_not_found
+    render json: {status: 'error', message: 'Song not found'}
+  end
+
+  def get_song
+    song = Song.find(params[:id])
+    render_not_found if !song
+    return song
   end
 end

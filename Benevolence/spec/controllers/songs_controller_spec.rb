@@ -76,4 +76,39 @@ RSpec.describe SongsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'PUT update' do
+    before(:all) do
+      @song = Song.create(title: 'A Song', duration: 180)
+      @update_object = {id: @song.id, song: {title: 'New Song'}}
+    end
+    before(:each) do
+      @song.update(title: 'A Song', duration: 180)
+    end
+    it 'should respond with JSON' do
+      put :update, @update_object
+      expect(response.content_type).to eq("application/json")
+    end
+    it 'should update the given song' do
+      put :update, @update_object
+      song = Song.find(@song.id)
+      expect(song.title).to eq('New Song')
+    end
+    it 'should not update any other songs' do
+      songs = Song.all.find_all {|s| s.id != @song.id}
+      put :update, @update_object
+      new_songs = Song.all.find_all {|s| s.id != @song.id}
+      new_songs.each_with_index do |s, i|
+        expect(s.title).to eq(songs[i].title)
+      end
+    end
+    it "should return a success message if the song was updated" do
+      put :update, @update_object
+      expect(response.body).to match /"status":"success"/
+    end
+    it "should return an error if the song isn't found" do
+      put :update, {id: 'fakeashellid', song: {title: 'New Song'}}
+      expect(response.body).to match /"status":"error"/
+    end
+  end
 end

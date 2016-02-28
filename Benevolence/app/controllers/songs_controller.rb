@@ -15,10 +15,14 @@ class SongsController < ApplicationController
   end
 
   def create
-    song = Song.new(song_params)  
-    song.user = current_user
-    song.save
-    render json: song, methods: :file_url
+    begin
+      song = Song.new(song_params)  
+      song.user = current_user
+      song.save
+      render json: {status: 'success', message: 'Song was successfully created'}
+    rescue
+      render json: {status: 'error', message: 'Failed to create song'}
+    end
   end
 
   def update

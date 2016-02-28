@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'securerandom'
 
 RSpec.describe SongsController, type: :controller do
   include Devise::TestHelpers
@@ -63,9 +64,9 @@ RSpec.describe SongsController, type: :controller do
       expect(response.content_type).to eq("application/json")
     end
     it 'should be able to create a new song' do
-      time = Time.now
-      post :create, {song: {title: time.to_s}}
-      expect(Song.where(title: time.to_s).length).to eq(1)
+      random = SecureRandom.uuid
+      post :create, {song: {title: random}}
+      expect(Song.where(title: random).length).to eq(1)
     end
     it 'should return a success message if song was created' do
       post :create, @song_object
@@ -109,6 +110,30 @@ RSpec.describe SongsController, type: :controller do
     it "should return an error if the song isn't found" do
       put :update, {id: 'fakeashellid', song: {title: 'New Song'}}
       expect(response.body).to match /"status":"error"/
+    end
+  end
+
+  describe 'DELETE destroy' do
+    before(:each) do
+      @song = Song.create(title: 'A Song', duration: 180)
+    end
+    it 'should respond with JSON' do
+      delete :destroy, {id: @song.id}
+      expect(response.content_type). to eq("application/json")
+    end
+    it 'should delete the given song' do
+      random = SecureRandom.uuid
+      song = Song.create(title: random)
+      delete :destroy, {id: song.id}
+      expect(Song.where(title: random).length).to eq(0)
+    end
+    it "should return an error if the song isn't found" do
+      delete :destroy, {id: 'justanotherfakeid'}
+      expect(response.body).to match /"status":"error"/
+    end
+    it "should return a success message if the song was deleted" do
+      delete :destroy, {id: @song.id}
+      expect(response.body).to match /"status":"success"/
     end
   end
 end

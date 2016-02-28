@@ -29,7 +29,7 @@ class SongsController < ApplicationController
   end
 
   def destroy
-    song = Song.find(params[:id])
+    song = get_song || return
     song.destroy
     render json: {status: 'success'}
   end

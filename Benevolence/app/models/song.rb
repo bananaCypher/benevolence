@@ -2,7 +2,7 @@ BASE_URL_PATH = '/tracks/'
 BASE_FILE_PATH = "#{Rails.root}/public/tracks/" 
 
 class Song
-  include Mongoid::Document
+  include Mongoid::Document; Mongoid.raise_not_found_error = false
   field :title, type: String
   field :duration, type: Integer
   belongs_to :user

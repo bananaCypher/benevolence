@@ -6,7 +6,12 @@ class SongsController < ApplicationController
   end
 
   def show
-    render json: Song.find(params[:id]), methods: :file_url
+    song = Song.find(params[:id])
+    if song
+      render json: Song.find(params[:id]), methods: :file_url
+    else
+      render json: {status: 'error', message: 'Song not found'}
+    end
   end
 
   def create

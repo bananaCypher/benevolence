@@ -37,4 +37,10 @@ class User
   field :name, type: String
   field :profile_picture, type: String
   has_many :songs
+
+  after_initialize :default_values
+
+  def default_values
+    self.profile_picture ||= '/logo.png'
+  end
 end

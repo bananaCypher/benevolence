@@ -1,8 +1,8 @@
 require('rails_helper')
 
-describe Song do
+RSpec.describe Song, type: :model do
   before(:each) do
-    @song = Song.new(title: 'My Song', duration: 180)
+    @song = build(:song_one)
     @uploader = User.new()
     @artist = Artist.new()
     @song.user = @uploader
@@ -10,7 +10,7 @@ describe Song do
   end
 
   it "should have a title" do
-    expect(@song.title).to eq('My Song')
+    expect(@song.title).to eq('Song1')
   end
   it "should have a duration" do
     expect(@song.duration).to eq(180)

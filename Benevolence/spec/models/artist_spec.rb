@@ -1,6 +1,6 @@
 require('rails_helper')
 
-describe Artist do
+RSpec.describe Artist, type: :model do
   before(:each) do
     @artist = Artist.new(name: 'An Artist')
     @small_art = 'http://lorempixel.com/200/200/'

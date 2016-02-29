@@ -1,6 +1,6 @@
 require('rails_helper')
 
-describe Album do
+RSpec.describe Album, type: :model do
   before(:each) do
     @album = Album.new(name: 'An Album')
     @artist = Artist.new(name: 'An Artist')

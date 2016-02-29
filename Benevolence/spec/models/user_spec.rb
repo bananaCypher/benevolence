@@ -1,6 +1,6 @@
 require('rails_helper')
 
-describe User do
+RSpec.describe User, type: :model do
   before(:each) do
     @user = User.new(name: 'A User')
     @art = 'http://lorempixel.com/200/200/'

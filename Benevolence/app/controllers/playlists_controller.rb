@@ -1,4 +1,6 @@
 class PlaylistsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     render json: Playlist.all
   end

@@ -53,7 +53,7 @@ RSpec.describe PlaylistsController, type: :controller do
 
   describe 'POST create' do
     before(:each) do
-      @user = build(:user)
+      @user = create(:user)
       def controller.current_user
         return @user
       end

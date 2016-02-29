@@ -1,4 +1,6 @@
 class ArtistsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     render json: Artist.all
   end

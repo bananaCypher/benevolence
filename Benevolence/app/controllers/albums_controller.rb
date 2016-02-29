@@ -25,6 +25,12 @@ class AlbumsController < ApplicationController
     render json: {status: 'success', message: 'Album was successfully updated'}
   end
 
+  def destroy
+    album = get_album || return
+    album.destroy
+    render json: {status: 'success'}
+  end
+
   private
   def album_params
     params.require(:album).permit(:name)

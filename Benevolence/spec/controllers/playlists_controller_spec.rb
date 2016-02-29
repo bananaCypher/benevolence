@@ -50,4 +50,31 @@ RSpec.describe PlaylistsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'POST create' do
+    before(:each) do
+      @user = build(:user)
+      def controller.current_user
+        return @user
+      end
+      @playlist_object = {playlist: {title: 'A Playlist'}}
+    end
+    it 'should respond with JSON' do
+      post :create, @playlist_object
+      expect(response.content_type).to eq("application/json")
+    end
+    it 'should be able to create a new playlist' do
+      random = SecureRandom.uuid
+      post :create, {playlist: {title: random}}
+      expect(Playlist.where(title: random).length).to eq(1)
+    end
+    it 'should return a success message if playlist was created' do
+      post :create, @playlist_object
+      expect(response.body).to match /"status":"success"/
+    end
+    it 'should return an error message if playlist failed to create' do
+      post :create, {random_key: 'random stuff'}
+      expect(response.body).to match /"status":"error"/
+    end
+  end
 end

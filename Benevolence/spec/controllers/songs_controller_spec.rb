@@ -88,9 +88,6 @@ RSpec.describe SongsController, type: :controller do
       post :create, {random_key: 'random stuff'}
       expect(response.body).to match /"status":"error"/
     end
-    after(:each) do
-      Song.last.destroy
-    end
   end
 
   describe 'PUT update' do

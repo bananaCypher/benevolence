@@ -51,4 +51,27 @@ RSpec.describe ArtistsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'POST create' do
+    before(:each) do
+      @artist_object = {artist: {name: 'An Artist'}}
+    end
+    it 'should respond with JSON' do
+      post :create, @artist_object
+      expect(response.content_type).to eq("application/json")
+    end
+    it 'should be able to create a new song' do
+      random = SecureRandom.uuid
+      post :create, {artist: {name: random}}
+      expect(Artist.where(name: random).length).to eq(1)
+    end
+    it 'should return a success message if song was created' do
+      post :create, @artist_object
+      expect(response.body).to match /"status":"success"/
+    end
+    it 'should return an error message if song failed to create' do
+      post :create, {random_key: 'random stuff'}
+      expect(response.body).to match /"status":"error"/
+    end
+  end
 end

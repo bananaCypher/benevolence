@@ -39,7 +39,7 @@ RSpec.describe PlaylistsController, type: :controller do
     end
     it 'should return only the requested playlist' do
       get :show, {id: @playlist.id}
-      playlists = playlist.where(:id.ne => @playlist.id)
+      playlists = Playlist.where(:id.ne => @playlist.id)
       ids = playlists.map{|p| p.id }
       ids.each do |id|
         expect(response.body).to_not match /"#{id}\"}/

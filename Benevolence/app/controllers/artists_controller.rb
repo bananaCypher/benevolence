@@ -5,7 +5,7 @@ class ArtistsController < ApplicationController
 
   def show
     artist = get_artist || return
-    render json: artist, methods: :file_url
+    render json: artist
   end
 
   def create

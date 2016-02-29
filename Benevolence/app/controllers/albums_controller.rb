@@ -5,7 +5,7 @@ class AlbumsController < ApplicationController
 
   def show
     album = get_album || return
-    render json: album, methods: :file_url
+    render json: album
   end
 
   def create

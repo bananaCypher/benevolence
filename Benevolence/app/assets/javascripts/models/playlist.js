@@ -4,6 +4,7 @@ var Playlist = function(id){
   this.id = id;
   this.title = '';
   this.tracks = [];
+  this.playingIndex = 0;
 }
 Playlist.prototype = {
   get: function(playlistId){
@@ -18,7 +19,19 @@ Playlist.prototype = {
       }
     }.bind(this);
     request.send(null);
-    
+  },
+  updatePlayingOrder: function(){
+    var nextIndex = this.playingIndex + 1;
+    if (nextIndex > this.tracks.length - 1) {
+      nextIndex = 0;
+    }
+    var prevIndex = this.playingIndex - 1;
+    if (prevIndex < 0) {
+      prevIndex = this.tracks.length - 1;
+    }
+    this.now_playing = this.tracks[this.playingIndex];
+    this.next_song = this.tracks[nextIndex];
+    this.prev_song = this.tracks[prevIndex];
   }
 }
 

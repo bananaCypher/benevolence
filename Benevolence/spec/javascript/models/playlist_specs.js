@@ -17,6 +17,7 @@ describe('Playlist', function(){
       "56d436d6fdc77eb085000009",
       "56d436e6fdc77eb08500000a" 
     ]
+    playlist.updatePlayingOrder();
   });
   it('should be have an id', function(){
     assert.equal(playlist.id, '56d4310afdc77eacb4000000');
@@ -25,6 +26,15 @@ describe('Playlist', function(){
     assert.equal(playlist.title, 'My Playlist');
   });
   it("should have a list of song id's", function(){
-    assert.equal(playlist.tracks.length, 9) ;
+    assert.equal(playlist.tracks.length, 9);
+  });
+  it("should know what song is current playing", function(){
+    assert.equal(playlist.now_playing, playlist.tracks[0]);
+  });
+  it("should know what song is next", function(){
+    assert.equal(playlist.next_song, playlist.tracks[1]);
+  });
+  it("should know what song is previous", function(){
+    assert.equal(playlist.prev_song, playlist.tracks[8]);
   });
 });

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   scope '/api' do
     resources :songs
     resources :artists
+    resources :albums
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

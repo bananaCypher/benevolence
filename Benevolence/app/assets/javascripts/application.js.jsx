@@ -13,4 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
+
+window.onload = function(){
+  ReactDOM.render(
+    <Title></Title>,
+    document.getElementById('app')
+  );
+}

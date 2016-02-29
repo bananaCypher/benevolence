@@ -105,4 +105,28 @@ RSpec.describe AlbumsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'DELETE destroy' do
+    before(:each) do
+      @album = create(:album)
+    end
+    it 'should respond with JSON' do
+      delete :destroy, {id: @album.id}
+      expect(response.content_type). to eq("application/json")
+    end
+    it 'should delete the given album' do
+      random = SecureRandom.uuid
+      album = Album.create(name: random)
+      delete :destroy, {id: album.id}
+      expect(Album.where(name: random).length).to eq(0)
+    end
+    it "should return an error if the album isn't found" do
+      delete :destroy, {id: 'justanotherfakeid'}
+      expect(response.body).to match /"status":"error"/
+    end
+    it "should return a success message if the album was deleted" do
+      delete :destroy, {id: @album.id}
+      expect(response.body).to match /"status":"success"/
+    end
+  end
 end

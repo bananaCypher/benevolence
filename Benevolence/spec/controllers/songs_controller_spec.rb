@@ -47,7 +47,7 @@ RSpec.describe SongsController, type: :controller do
     end
     it 'should return only the requested song' do
       get :show, {id: @song.id}
-      songs = Song.all[0..Song.all.length - 2]
+      songs = Song.where(:id.ne => @song.id)
       ids = songs.map{|s| s.id }
       ids.each do |id|
         expect(response.body).to_not match /"#{id}\"}/

@@ -112,4 +112,28 @@ RSpec.describe PlaylistsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'DELETE destroy' do
+    before(:each) do
+      @playlist = create(:playlist)
+    end
+    it 'should respond with JSON' do
+      delete :destroy, {id: @playlist.id}
+      expect(response.content_type). to eq("application/json")
+    end
+    it 'should delete the given playlist' do
+      random = SecureRandom.uuid
+      playlist = Playlist.create(title: random)
+      delete :destroy, {id: playlist.id}
+      expect(Playlist.where(title: random).length).to eq(0)
+    end
+    it "should return an error if the playlist isn't found" do
+      delete :destroy, {id: 'justanotherfakeid'}
+      expect(response.body).to match /"status":"error"/
+    end
+    it "should return a success message if the playlist was deleted" do
+      delete :destroy, {id: @playlist.id}
+      expect(response.body).to match /"status":"success"/
+    end
+  end
 end

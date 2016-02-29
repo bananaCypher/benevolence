@@ -19,6 +19,13 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  def update
+    playlist = get_playlist || return
+    playlist.update(playlist_params)
+    playlist.save
+    render json: {status: 'success', message: 'Playlist was successfully updated'}
+  end
+
   private
   def playlist_params
     params.require(:playlist).permit(:title)

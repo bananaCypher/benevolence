@@ -7,7 +7,7 @@ class SongsController < ApplicationController
 
   def show
     song = get_song || return
-    render json: Song.find(params[:id]), methods: :file_url
+    render json: song, methods: :file_url
   end
 
   def create

@@ -7,7 +7,7 @@ RSpec.describe Playlist, type: :model do
   end
 
   it "should have a title" do
-    expect(@playlist.title).to eq('A Playlisy')
+    expect(@playlist.title).to eq('A Playlist')
   end
   it "should have an owner" do
     expect(@playlist.user.class.to_s).to eq('User')

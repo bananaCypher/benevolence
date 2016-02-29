@@ -20,4 +20,9 @@ RSpec.describe User, type: :model do
     @user.songs.push(build(:song_two))
     expect(@user.songs.length).to eq(2)
   end
+  it "can have multiple playlists" do
+    @user.playlists.push(build(:playlist))
+    @user.playlists.push(build(:playlist))
+    expect(@user.playlists.length).to eq(2)
+  end
 end

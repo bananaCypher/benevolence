@@ -37,6 +37,7 @@ class User
   field :name, type: String
   field :profile_picture, type: String
   has_many :songs
+  has_many :playlists
 
   after_initialize :default_values
 

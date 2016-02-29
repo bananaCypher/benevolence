@@ -7,7 +7,15 @@ class PlaylistsController < ApplicationController
 
   def show
     playlist = get_playlist || return
-    render json: playlist
+    tracks = playlist.songs.map do |song|
+      {song: song.id, artist: song.artist.id}
+    end
+    return_playlist = {
+      id: playlist.id,
+      title: playlist.title,
+      tracks: tracks
+    }
+    render json: return_playlist
   end
 
   def create

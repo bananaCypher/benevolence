@@ -49,6 +49,17 @@ RSpec.describe PlaylistsController, type: :controller do
       get :show, {id: 'iamsuchafakeid'}
       expect(response.body).to match /"status":"error"/
     end
+    it "should have an array of song hashes each with a song id and artist id" do
+      song = create(:song_one)
+      artist = create(:artist)
+      song.artist = artist
+      song.save
+      @playlist.songs.push(song)
+      @playlist.save
+      get :show, {id: @playlist.id}
+      expect(response.body).to match /"#{song.id}"/
+      expect(response.body).to match /"#{artist.id}"/
+    end
   end
 
   describe 'POST create' do

@@ -4,6 +4,13 @@ require 'securerandom'
 RSpec.describe SongsController, type: :controller do
   include Devise::TestHelpers
   describe 'GET index' do
+    before(:each) do
+      create(:song_one)
+      create(:song_one)
+      create(:song_one)
+      create(:song_one)
+      create(:song_one)
+    end
     it 'should respond with JSON' do
       get :index
       expect(response.content_type).to eq "application/json"
@@ -23,7 +30,12 @@ RSpec.describe SongsController, type: :controller do
 
   describe 'GET show' do
     before(:all) do
-      @song = Song.create(title: 'A Song', duration: 180)
+      create(:song_one)
+      create(:song_one)
+      create(:song_one)
+      create(:song_one)
+      create(:song_one)
+      @song = create(:song_one)
     end
     it 'should respond with JSON' do
       get :show, {id: @song.id}
@@ -53,7 +65,7 @@ RSpec.describe SongsController, type: :controller do
 
   describe 'POST create' do
     before(:each) do
-      @user = User.new(name: 'Test User')
+      @user = build(:user)
       def controller.current_user
         return @user
       end
@@ -76,11 +88,14 @@ RSpec.describe SongsController, type: :controller do
       post :create, {random_key: 'random stuff'}
       expect(response.body).to match /"status":"error"/
     end
+    after(:each) do
+      Song.last.destroy
+    end
   end
 
   describe 'PUT update' do
     before(:all) do
-      @song = Song.create(title: 'A Song', duration: 180)
+      @song = create(:song_one)
       @update_object = {id: @song.id, song: {title: 'New Song'}}
     end
     before(:each) do
@@ -115,7 +130,7 @@ RSpec.describe SongsController, type: :controller do
 
   describe 'DELETE destroy' do
     before(:each) do
-      @song = Song.create(title: 'A Song', duration: 180)
+      @song = create(:song_one)
     end
     it 'should respond with JSON' do
       delete :destroy, {id: @song.id}
@@ -126,6 +141,7 @@ RSpec.describe SongsController, type: :controller do
       song = Song.create(title: random)
       delete :destroy, {id: song.id}
       expect(Song.where(title: random).length).to eq(0)
+      Song.last.destroy
     end
     it "should return an error if the song isn't found" do
       delete :destroy, {id: 'justanotherfakeid'}

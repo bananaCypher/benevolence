@@ -5,6 +5,7 @@ var Playlist = function(id){
   this.title = '';
   this.tracks = [];
   this.playingIndex = 0;
+  this.repeat = 0;
 }
 Playlist.prototype = {
   get: function(playlistId){
@@ -21,17 +22,31 @@ Playlist.prototype = {
     request.send(null);
   },
   updatePlayingOrder: function(){
+    this.now_playing = this.tracks[this.playingIndex];
+    this.next_song = this.tracks[this.nextIndex()];
+    this.prev_song = this.tracks[this.prevIndex()];
+  },
+  nextIndex: function(){
     var nextIndex = this.playingIndex + 1;
     if (nextIndex > this.tracks.length - 1) {
-      nextIndex = 0;
+      if (this.repeat == 2) {
+        nextIndex = 0;
+      } else {
+        nextIndex = this.tracks.length - 1;
+      }
     }
+    return nextIndex;
+  },
+  prevIndex: function(){
     var prevIndex = this.playingIndex - 1;
     if (prevIndex < 0) {
-      prevIndex = this.tracks.length - 1;
+      if (this.repeat == 2) {
+        prevIndex = this.tracks.length - 1;
+      } else {
+        prevIndex = 0;
+      }
     }
-    this.now_playing = this.tracks[this.playingIndex];
-    this.next_song = this.tracks[nextIndex];
-    this.prev_song = this.tracks[prevIndex];
+    return prevIndex;
   }
 }
 

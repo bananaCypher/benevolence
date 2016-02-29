@@ -35,6 +35,12 @@ describe('Playlist', function(){
     assert.equal(playlist.next_song, playlist.tracks[1]);
   });
   it("should know what song is previous", function(){
-    assert.equal(playlist.prev_song, playlist.tracks[8]);
+    assert.equal(playlist.prev_song, playlist.tracks[0]);
+  });
+  it("should loop round to first song if playlist repeat is on", function(){
+    playlist.repeat = 2;
+    playlist.playingIndex = playlist.tracks.length - 1;
+    playlist.updatePlayingOrder();
+    assert.equal(playlist.next_song, playlist.tracks[0]);
   });
 });

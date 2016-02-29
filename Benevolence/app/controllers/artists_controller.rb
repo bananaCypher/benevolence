@@ -25,6 +25,12 @@ class ArtistsController < ApplicationController
     render json: {status: 'success', message: 'Artist was successfully updated'}
   end
 
+  def destroy
+    artist = get_artist || return
+    artist.destroy
+    render json: {status: 'success'}
+  end
+
   private
   def artist_params
     params.require(:artist).permit(:name)

@@ -18,6 +18,13 @@ class AlbumsController < ApplicationController
     end
   end
 
+  def update
+    album = get_album || return
+    album.update(album_params)
+    album.save
+    render json: {status: 'success', message: 'Album was successfully updated'}
+  end
+
   private
   def album_params
     params.require(:album).permit(:name)

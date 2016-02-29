@@ -18,6 +18,13 @@ class ArtistsController < ApplicationController
     end
   end
 
+  def update
+    artist = get_artist || return
+    artist.update(artist_params)
+    artist.save
+    render json: {status: 'success', message: 'Artist was successfully updated'}
+  end
+
   private
   def artist_params
     params.require(:artist).permit(:name)

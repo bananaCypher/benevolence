@@ -87,7 +87,7 @@ RSpec.describe ArtistsController, type: :controller do
     it 'should update the given artist' do
       put :update, @update_object
       artist = Artist.find(@artist.id)
-      expect(song.title).to eq('An updated Artist')
+      expect(artist.name).to eq('An updated Artist')
     end
     it 'should not update any other artists' do
       artists = Artist.all.find_all {|a| a.id != @artist.id}

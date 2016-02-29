@@ -138,7 +138,6 @@ RSpec.describe SongsController, type: :controller do
       song = Song.create(title: random)
       delete :destroy, {id: song.id}
       expect(Song.where(title: random).length).to eq(0)
-      Song.last.destroy
     end
     it "should return an error if the song isn't found" do
       delete :destroy, {id: 'justanotherfakeid'}

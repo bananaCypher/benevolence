@@ -106,4 +106,28 @@ RSpec.describe ArtistsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'DELETE destroy' do
+    before(:each) do
+      @artist = create(:artist)
+    end
+    it 'should respond with JSON' do
+      delete :destroy, {id: @artist.id}
+      expect(response.content_type). to eq("application/json")
+    end
+    it 'should delete the given artist' do
+      random = SecureRandom.uuid
+      artist = Artist.create(name: random)
+      delete :destroy, {id: artist.id}
+      expect(Artist.where(name: random).length).to eq(0)
+    end
+    it "should return an error if the artist isn't found" do
+      delete :destroy, {id: 'justanotherfakeid'}
+      expect(response.body).to match /"status":"error"/
+    end
+    it "should return a success message if the artist was deleted" do
+      delete :destroy, {id: @artist.id}
+      expect(response.body).to match /"status":"success"/
+    end
+  end
 end

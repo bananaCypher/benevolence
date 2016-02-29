@@ -26,6 +26,12 @@ class PlaylistsController < ApplicationController
     render json: {status: 'success', message: 'Playlist was successfully updated'}
   end
 
+  def destroy
+    playlist = get_playlist || return
+    playlist.destroy
+    render json: {status: 'success'}
+  end
+
   private
   def playlist_params
     params.require(:playlist).permit(:title)

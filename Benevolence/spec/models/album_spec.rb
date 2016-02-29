@@ -2,11 +2,8 @@ require('rails_helper')
 
 RSpec.describe Album, type: :model do
   before(:each) do
-    @album = Album.new(name: 'An Album')
-    @artist = Artist.new(name: 'An Artist')
-    @album.artist = @artist
-    @song1 = Song.new()
-    @song2 = Song.new()
+    @album = build(:album)
+    @album.artist = build(:artist)
   end
 
   it "should have a name" do
@@ -30,8 +27,8 @@ RSpec.describe Album, type: :model do
   end
 
   it "can have multiple songs" do
-    @album.songs.push(@song1)
-    @album.songs.push(@song2)
+    @album.songs.push(build(:song_one))
+    @album.songs.push(build(:song_two))
     expect(@album.songs.length).to eq(2)
   end
 end

@@ -3,10 +3,8 @@ require('rails_helper')
 RSpec.describe Song, type: :model do
   before(:each) do
     @song = build(:song_one)
-    @uploader = User.new()
-    @artist = Artist.new()
-    @song.user = @uploader
-    @song.artist = @artist
+    @song.user = build(:user)
+    @song.artist = build(:artist)
   end
 
   it "should have a title" do

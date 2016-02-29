@@ -2,16 +2,12 @@ require('rails_helper')
 
 RSpec.describe Artist, type: :model do
   before(:each) do
-    @artist = Artist.new(name: 'An Artist')
+    @artist = build(:artist)
     @small_art = 'http://lorempixel.com/200/200/'
     @large_art = 'http://lorempixel.com/1000/600/' 
     @default_small = '/logo.png'
     @default_large = '/space.jpg'
     @biography = 'This is a test artist.'
-    @album1 = Album.new()
-    @album2 = Album.new()
-    @song1 = Song.new()
-    @song2 = Song.new()
   end
 
   it "should have a name" do
@@ -36,13 +32,13 @@ RSpec.describe Artist, type: :model do
     expect(@artist.biography).to eq('This is a test artist.')
   end
   it "can have multiple albums" do
-    @artist.albums.push(@album1)
-    @artist.albums.push(@album2)
+    @artist.albums.push(build(:album))
+    @artist.albums.push(build(:album_two))
     expect(@artist.albums.length).to eq(2)
   end
   it "can have multiple songs" do
-    @artist.songs.push(@song1)
-    @artist.songs.push(@song2)
+    @artist.songs.push(build(:song_one))
+    @artist.songs.push(build(:song_two))
     expect(@artist.songs.length).to eq(2)
   end
 

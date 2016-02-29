@@ -77,4 +77,39 @@ RSpec.describe PlaylistsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+  
+  describe 'PUT update' do
+    before(:all) do
+      @playlist = create(:playlist)
+      @update_object = {id: @playlist.id, playlist: {title: 'New Playlist'}}
+    end
+    before(:each) do
+      @playlist.update(title: 'A Playlist')
+    end
+    it 'should respond with JSON' do
+      put :update, @update_object
+      expect(response.content_type).to eq("application/json")
+    end
+    it 'should update the given playlist' do
+      put :update, @update_object
+      playlist = Playlist.find(@playlist.id)
+      expect(playlist.title).to eq('New Playlist')
+    end
+    it 'should not update any other playlists' do
+      playlists = Playlist.all.find_all {|p| p.id != @playlist.id}
+      put :update, @update_object
+      new_playlists = Playlist.all.find_all {|p| p.id != @playlist.id}
+      new_playlists.each_with_index do |p, i|
+        expect(p.title).to eq(playlists[i].title)
+      end
+    end
+    it "should return a success message if the playlist was updated" do
+      put :update, @update_object
+      expect(response.body).to match /"status":"success"/
+    end
+    it "should return an error if the playlist isn't found" do
+      put :update, {id: 'fakeashellid', playlist: {title: 'New Playlist'}}
+      expect(response.body).to match /"status":"error"/
+    end
+  end
 end

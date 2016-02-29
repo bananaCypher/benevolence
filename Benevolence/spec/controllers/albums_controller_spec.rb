@@ -50,4 +50,27 @@ RSpec.describe AlbumsController, type: :controller do
       expect(response.body).to match /"status":"error"/
     end
   end
+
+  describe 'POST create' do
+    before(:each) do
+      @album_object = {album: {name: 'An Album'}}
+    end
+    it 'should respond with JSON' do
+      post :create, @artist_object
+      expect(response.content_type).to eq("application/json")
+    end
+    it 'should be able to create a new album' do
+      random = SecureRandom.uuid
+      post :create, {album: {name: random}}
+      expect(Album.where(name: random).length).to eq(1)
+    end
+    it 'should return a success message if album was created' do
+      post :create, @album_object
+      expect(response.body).to match /"status":"success"/
+    end
+    it 'should return an error message if album failed to create' do
+      post :create, {random_key: 'random stuff'}
+      expect(response.body).to match /"status":"error"/
+    end
+  end
 end

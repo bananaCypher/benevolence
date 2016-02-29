@@ -7,15 +7,15 @@ describe('Playlist', function(){
     playlist = new Playlist('56d4310afdc77eacb4000000');
     playlist.title = 'My Playlist';
     playlist.tracks = [
-      "56d43681fdc77eb085000002", 
-      "56d4369bfdc77eb085000003",
-      "56d436aafdc77eb085000004",
-      "56d436b7fdc77eb085000005",
-      "56d436bcfdc77eb085000006",
-      "56d436c5fdc77eb085000007",
-      "56d436cdfdc77eb085000008",
-      "56d436d6fdc77eb085000009",
-      "56d436e6fdc77eb08500000a" 
+      {song: "56d43681fdc77eb085000002", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d4369bfdc77eb085000003", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436aafdc77eb085000004", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436b7fdc77eb085000005", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436bcfdc77eb085000006", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436c5fdc77eb085000007", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436cdfdc77eb085000008", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436d6fdc77eb085000009", artist: "56d4354cfdc77eb085000000"},
+      {song: "56d436e6fdc77eb08500000a", artist: "56d4354cfdc77eb085000000"},
     ]
     playlist.updatePlayingOrder();
   });

@@ -8,7 +8,7 @@ class PlaylistsController < ApplicationController
   def show
     playlist = get_playlist || return
     tracks = playlist.songs.map do |song|
-      {song: song.id, artist: song.artist.id}
+      {song: song.id.to_s, artist: song.artist.id.to_s}
     end
     return_playlist = {
       id: playlist.id,

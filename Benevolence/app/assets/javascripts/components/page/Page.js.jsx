@@ -1,10 +1,19 @@
 var Page = React.createClass({
   getInitialState: function() {
-    return {data: []};
+    playlist = new Playlist('56d4310afdc77eacb4000000')
+    return {playlist: playlist};
+  },
+  componentDidMount: function() {
+    this.state.playlist.update(function(playlist){
+      this.setState({playlist: playlist})
+    }.bind(this));
   },
   render: function() {
     return (
-      <h1>Title</h1>
+      <div>
+        <h1>Benevolence</h1>
+        <Player now_playing={this.state.playlist.now_playing}></Player>
+      </div>
     );
   }
 });

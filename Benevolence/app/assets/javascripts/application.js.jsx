@@ -20,7 +20,7 @@
 
 window.onload = function(){
   ReactDOM.render(
-    <Title></Title>,
+    <Page></Page>,
     document.getElementById('app')
   );
 }

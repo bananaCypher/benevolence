@@ -1,9 +1,9 @@
 var PlayerTrack = React.createClass({
-  width: 800,
   size: 20,
   trackClick: function(e) {
-    var x = e.clientX - this.getDOMNode().offsetLeft;
-    var newPosition = x / this.width * this.props.duration;
+    var track = this.getDOMNode();
+    var x = e.clientX - track.offsetLeft;
+    var newPosition = x / track.offsetWidth * this.props.duration;
     this.props.seek(newPosition);
   },
   trackNode: function(){
@@ -12,12 +12,12 @@ var PlayerTrack = React.createClass({
   render: function() {
     var styles = {
       backgroundColor: 'green',
-      width: this.width + 'px',
+      width: '85vw',
       height: this.size + 'px',
       borderRadius: this.size + 'px'
     };
     return (
-      <div style={styles} onClick={this.trackClick}>
+      <div style={styles} onClick={this.trackClick} id='player-track'>
         <PlayerPointer 
           position={this.props.position} 
           duration={this.props.duration}

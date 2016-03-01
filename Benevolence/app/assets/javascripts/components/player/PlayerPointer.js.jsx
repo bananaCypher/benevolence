@@ -2,9 +2,13 @@ var PlayerPointer = React.createClass({
   dragging: false,
   lastPosition: 0,
   getLeft: function() {
+    var track = document.getElementById('player-track');
+    if (!track) {
+      return '0px';
+    }
     if (this.dragging == false) {
       var perc = this.props.position / this.props.duration;
-      this.lastPosition = (this.props.trackWidth - this.props.size) * perc;
+      this.lastPosition = (track.offsetWidth - this.props.size) * perc;
     }
     return this.lastPosition + 'px';
   },

@@ -61,6 +61,7 @@ var Player = React.createClass({
       <PlayerButton action={this.next}>DJ Skip that Shite</PlayerButton> 
       <PlayerButton action={this.prev}>DJ Re-Spin that Shit</PlayerButton> 
       <PlayerButton action={this.props.shuffle}>DJ Shuffle that Shit</PlayerButton> 
+      <PlayerButton action={this.props.repeat}>DJ Repeat that Shit</PlayerButton> 
       <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
       <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>

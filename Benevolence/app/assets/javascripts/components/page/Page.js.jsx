@@ -23,13 +23,28 @@ var Page = React.createClass({
       playlistTitle: '',
       playlistTracks: [],
       currentIndex: 0,
-      currentSong: null
+      currentSong: null,
+      repeat: 0
     };
+  },
+  componentDidMount: function(){
+    Playlist.get(this.state.playlistID, function(details){
+      this.setState({
+        playlistTitle: details.title, 
+        playlistTracks: details.tracks,
+        currentSong: details.tracks[0],
+        currentIndex: 0
+      }) 
+    }.bind(this));
   },
   nextSong: function(){
     next = this.state.currentIndex + 1;
     if (next > this.state.playlistTracks.length - 1) {
-      next = this.state.playlistTracks.length - 1;
+      if (this.state.repeat == 1) {
+        next = 0;
+      } else {
+        next = this.state.playlistTracks.length - 1;
+      }
     }
     this.setState({
       currentIndex: next,
@@ -39,7 +54,11 @@ var Page = React.createClass({
   prevSong: function(){
     prev = this.state.currentIndex - 1;
     if (prev < 0) {
-      prev = 0;
+      if (this.state.repeat == 1) {
+        prev = this.state.playlistTracks.length - 1;
+      } else {
+        prev = 0;
+      }
     }
     this.setState({
       currentIndex: prev,
@@ -54,21 +73,18 @@ var Page = React.createClass({
       currentIndex: newIndex
     });
   },
-  componentDidMount: function(){
-    Playlist.get(this.state.playlistID, function(details){
-      this.setState({
-        playlistTitle: details.title, 
-        playlistTracks: details.tracks,
-        currentSong: details.tracks[0],
-        currentIndex: 0
-      }) 
-    }.bind(this));
+  toggleRepeat: function(){
+    newRepeat = this.state.repeat + 1;
+    if (newRepeat > 2) {
+      newRepeat = 0;
+    }
+    this.setState({repeat: newRepeat})
   },
   render: function() {
     return (
       <div>
         <h1>Benevolence</h1>
-        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist}></Player>
+        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist} repeat={this.toggleRepeat}></Player>
       </div>
     );
   }

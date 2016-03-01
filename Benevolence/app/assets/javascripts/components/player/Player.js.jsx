@@ -1,8 +1,19 @@
 var Player = React.createClass({
   getInitialState: function() {
     return {
-      songUrl: ''
+      songUrl: '',
+      songPosition: 0,
+      songDuration: 200
     }
+  },
+  componentDidMount(){
+    this.player = document.getElementById('audio-player');
+    this.player.ontimeupdate = function(){
+      this.setState({
+        songPosition: this.player.currentTime,
+        songDuration: this.player.duration
+      });
+    }.bind(this)
   },
   componentWillReceiveProps: function(props) {
     Song.get(props.song, function(details){
@@ -11,21 +22,20 @@ var Player = React.createClass({
       }); 
     }.bind(this));
   },
-  player: function() {
-    return document.getElementById('audio-player')
+  componentDidUpdate: function(){
   },
   play: function() {
-    var player = this.player();
-    player.play();
+    this.player.play();
   },
   pause: function() {
-    var player = this.player();
-    player.pause();
+    this.player.pause();
   },
   stop: function() {
-    var player = this.player();
-    player.pause();
-    player.currentTime = 0;
+    this.player.pause();
+    this.player.currentTime = 0;
+  },
+  seek: function(pos) {
+    this.player.currentTime = pos
   },
   render: function() {
     return (
@@ -33,7 +43,8 @@ var Player = React.createClass({
       <PlayerButton action={this.play}>DJ Spin that Shit</PlayerButton>
       <PlayerButton action={this.pause}>DJ Pause that Sheet</PlayerButton> 
       <PlayerButton action={this.stop}>DJ Stop that Sheit</PlayerButton> 
-      <audio id='audio-player' src={this.state.songUrl}></audio>
+      <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
+      <PlayerAudio src={this.state.songUrl}></PlayerAudio>
       </div>
     );
   }

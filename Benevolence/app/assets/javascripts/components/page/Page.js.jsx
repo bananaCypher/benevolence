@@ -38,7 +38,7 @@ var Page = React.createClass({
     }.bind(this));
   },
   nextSong: function(){
-    next = this.state.currentIndex + 1;
+    var next = this.state.currentIndex + 1;
     if (next > this.state.playlistTracks.length - 1) {
       if (this.state.repeat == 1) {
         next = 0;
@@ -46,13 +46,16 @@ var Page = React.createClass({
         next = this.state.playlistTracks.length - 1;
       }
     }
+    if (this.state.repeat == 2) {
+      next = this.state.currentIndex;
+    };
     this.setState({
       currentIndex: next,
       currentSong: this.state.playlistTracks[next]
     });
   },
   prevSong: function(){
-    prev = this.state.currentIndex - 1;
+    var prev = this.state.currentIndex - 1;
     if (prev < 0) {
       if (this.state.repeat == 1) {
         prev = this.state.playlistTracks.length - 1;
@@ -60,6 +63,9 @@ var Page = React.createClass({
         prev = 0;
       }
     }
+    if (this.state.repeat == 2) {
+      prev = this.state.currentIndex;
+    };
     this.setState({
       currentIndex: prev,
       currentSong: this.state.playlistTracks[prev]

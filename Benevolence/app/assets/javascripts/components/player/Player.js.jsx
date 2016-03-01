@@ -38,16 +38,22 @@ var Player = React.createClass({
     this.player.currentTime = 0;
   },
   next: function() {
+    this.props.nextSong();
     if (this.state.playing == false) {
       this.stop();
+    } else {
+      this.player.currentTime = 0;
+      this.player.play();
     }
-    this.props.nextSong();
   },
   prev: function() {
+    this.props.prevSong();
     if (this.state.playing == false) {
       this.stop();
+    } else {
+      this.player.currentTime = 0;
+      this.player.play();
     }
-    this.props.prevSong();
   },
   seek: function(pos) {
     this.player.currentTime = pos

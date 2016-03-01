@@ -3,7 +3,8 @@ var Player = React.createClass({
     return {
       songUrl: '',
       songPosition: 0,
-      songDuration: 200
+      songDuration: 200,
+      playing: false
     }
   },
   componentDidMount(){
@@ -26,13 +27,20 @@ var Player = React.createClass({
   },
   play: function() {
     this.player.play();
+    this.setState({playing: true});
   },
   pause: function() {
     this.player.pause();
+    this.setState({playing: false});
   },
   stop: function() {
-    this.player.pause();
+    this.pause();
     this.player.currentTime = 0;
+  },
+  next: function() {
+    this.stop();
+    this.setState({playing: true});
+    this.props.nextSong();
   },
   seek: function(pos) {
     this.player.currentTime = pos
@@ -43,8 +51,9 @@ var Player = React.createClass({
       <PlayerButton action={this.play}>DJ Spin that Shit</PlayerButton>
       <PlayerButton action={this.pause}>DJ Pause that Sheet</PlayerButton> 
       <PlayerButton action={this.stop}>DJ Stop that Sheit</PlayerButton> 
+      <PlayerButton action={this.next}>DJ Skip that Shite</PlayerButton> 
       <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
-      <PlayerAudio src={this.state.songUrl}></PlayerAudio>
+      <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>
     );
   }

@@ -14,6 +14,7 @@ var PlayerTrack = React.createClass({
       backgroundColor: 'green',
       width: this.width + 'px',
       height: this.size + 'px',
+      borderRadius: this.size + 'px'
     };
     return (
       <div style={styles} onClick={this.trackClick}>

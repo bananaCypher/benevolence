@@ -9,7 +9,6 @@ var PlayerPointer = React.createClass({
     return this.lastPosition + 'px';
   },
   startDrag: function(){
-    console.log('here we go');
     this.dragging = true;
     window.onmousemove = this.dragHandler;
     window.onmouseup = this.stopDrag
@@ -36,6 +35,7 @@ var PlayerPointer = React.createClass({
       backgroundColor: 'yellow',
       width: this.props.size + 'px',
       height: this.props.size + 'px',
+      borderRadius: '50%',
       position: 'relative',
       left: this.getLeft()
     };

@@ -1,31 +1,15 @@
-var Song = function(id){
-  this.baseURL = 'http://localhost:3000/api/songs/'
-  this.id = id; 
-  this.title = '';
-  this.artist = '';
-  this.album = '';
-  this.url = '';
-}
-Song.prototype = {
-  get: function(callback){
+Song = {
+  get: function(id, callback){
+    var URL = 'http://localhost:3000/api/songs/' + id
     var request = new XMLHttpRequest();
-    request.open('GET', this.baseURL + this.id);
+    request.open('GET', URL);
     request.onload = function(){
       if (request.status === 200) {
         obj = JSON.parse(request.responseText); 
-        this.title = obj.title;
-        this.artist = obj.artist;
-        if(obj.abum){ this.album=obj.album }
-        this.url = obj.file_url
-        callback(this);
+        callback(obj);
       } else {
       }
     }.bind(this);
     request.send(null);
   },
 }
-
-try {
-  module.exports = Song;
-} 
-catch(err) {}

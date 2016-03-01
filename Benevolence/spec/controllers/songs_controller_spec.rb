@@ -35,7 +35,10 @@ RSpec.describe SongsController, type: :controller do
       create(:song_one)
       create(:song_one)
       create(:song_one)
+      artist = create(:artist)
       @song = create(:song_one)
+      @song.artist = artist
+      @song.save
     end
     it 'should respond with JSON' do
       get :show, {id: @song.id}
@@ -60,6 +63,11 @@ RSpec.describe SongsController, type: :controller do
     it 'should include the songs file url' do
       get :show, {id: @song.id}
       expect(response.body).to match /"file_url":/
+    end
+    it 'should include the title and artist' do
+      get :show, {id: @song.id}
+      expect(response.body).to match /"title":/
+      expect(response.body).to match /"artist":/
     end
   end
 

@@ -7,7 +7,17 @@ class SongsController < ApplicationController
 
   def show
     song = get_song || return
-    render json: song, methods: :file_url
+    if song.album
+      album = song.album.id.to_s
+    end
+    return_song = {
+      id: song.id.to_s,
+      title: song.title,
+      artist: song.artist.id.to_s,
+      album: album || '',
+      file_url: song.file_url()
+    }
+    render json: return_song
   end
 
   def create

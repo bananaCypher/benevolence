@@ -1,6 +1,5 @@
-var baseURL = 'http://localhost:3000/api/songs/'
-
 var Song = function(id){
+  this.baseURL = 'http://localhost:3000/api/songs/'
   this.id = id; 
   this.title = '';
   this.artist = '';
@@ -10,7 +9,7 @@ var Song = function(id){
 Song.prototype = {
   get: function(callback){
     var request = new XMLHttpRequest();
-    request.open('GET', baseURL + this.id);
+    request.open('GET', this.baseURL + this.id);
     request.onload = function(){
       if (request.status === 200) {
         obj = JSON.parse(request.responseText); 

@@ -18,6 +18,16 @@ var Page = React.createClass({
       currentSong: this.state.playlistTracks[next]
     });
   },
+  prevSong: function(){
+    prev = this.state.currentIndex - 1;
+    if (prev < 0) {
+      prev = 0;
+    }
+    this.setState({
+      currentIndex: prev,
+      currentSong: this.state.playlistTracks[prev]
+    });
+  },
   componentDidMount: function(){
     Playlist.get(this.state.playlistID, function(details){
       this.setState({
@@ -32,7 +42,7 @@ var Page = React.createClass({
     return (
       <div>
         <h1>Benevolence</h1>
-        <Player song={this.state.currentSong} nextSong={this.nextSong}></Player>
+        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong}></Player>
       </div>
     );
   }

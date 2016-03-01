@@ -38,9 +38,16 @@ var Player = React.createClass({
     this.player.currentTime = 0;
   },
   next: function() {
-    this.stop();
-    this.setState({playing: true});
+    if (this.state.playing == false) {
+      this.stop();
+    }
     this.props.nextSong();
+  },
+  prev: function() {
+    if (this.state.playing == false) {
+      this.stop();
+    }
+    this.props.prevSong();
   },
   seek: function(pos) {
     this.player.currentTime = pos
@@ -52,6 +59,7 @@ var Player = React.createClass({
       <PlayerButton action={this.pause}>DJ Pause that Sheet</PlayerButton> 
       <PlayerButton action={this.stop}>DJ Stop that Sheit</PlayerButton> 
       <PlayerButton action={this.next}>DJ Skip that Shite</PlayerButton> 
+      <PlayerButton action={this.prev}>DJ Re-Spin that Shit</PlayerButton> 
       <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
       <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>

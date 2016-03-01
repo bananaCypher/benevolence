@@ -1,3 +1,21 @@
+// http://stackoverflow.com/a/6274398
+function shuffleArray(array) {
+  let counter = array.length;
+  // While there are elements in the array
+  while (counter > 0) {
+    // Pick a random index
+    let index = Math.floor(Math.random() * counter);
+    // Decrease counter by 1
+    counter--;
+    // And swap the last element with it
+    let temp = array[counter];
+    array[counter] = array[index];
+    array[index] = temp;
+  }
+  return array;
+}
+
+
 var Page = React.createClass({
   getInitialState: function() {
     return {
@@ -28,6 +46,14 @@ var Page = React.createClass({
       currentSong: this.state.playlistTracks[prev]
     });
   },
+  shufflePlaylist: function(){
+    var newTracks = shuffleArray(this.state.playlistTracks);
+    var newIndex = newTracks.indexOf(this.state.currentSong);
+    this.setState({
+      playlistTracks: newTracks,
+      currentIndex: newIndex
+    });
+  },
   componentDidMount: function(){
     Playlist.get(this.state.playlistID, function(details){
       this.setState({
@@ -42,7 +68,7 @@ var Page = React.createClass({
     return (
       <div>
         <h1>Benevolence</h1>
-        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong}></Player>
+        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist}></Player>
       </div>
     );
   }

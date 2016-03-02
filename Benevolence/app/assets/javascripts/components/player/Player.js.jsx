@@ -63,14 +63,14 @@ var Player = React.createClass({
   render: function() {
     return (
       <div className='ReactPlayer'>
-      <PlayerTrack className='ReactPlayerTrack' seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
-      <PlayerButton action={this.play}>DJ Spin that Shit</PlayerButton>
-      <PlayerButton action={this.pause}>DJ Pause that Sheet</PlayerButton> 
-      <PlayerButton action={this.stop}>DJ Stop that Sheit</PlayerButton> 
-      <PlayerButton action={this.next}>DJ Skip that Shite</PlayerButton> 
-      <PlayerButton action={this.prev}>DJ Re-Spin that Shit</PlayerButton> 
-      <PlayerButton action={this.props.shuffle}>DJ Shuffle that Shit</PlayerButton> 
-      <PlayerButton action={this.props.repeat}>DJ Repeat that Shit</PlayerButton> 
+      <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
+      <PlayerButton action={this.props.shuffle}>fa-random</PlayerButton> 
+      <PlayerButton action={this.prev}>fa-step-backward</PlayerButton> 
+      <PlayerButton action={this.play}>fa-play</PlayerButton>
+      <PlayerButton action={this.pause}>fa-pause</PlayerButton> 
+      <PlayerButton action={this.next}>fa-step-forward</PlayerButton> 
+      <PlayerButton action={this.stop}>fa-stop</PlayerButton> 
+      <PlayerButton action={this.props.repeat}>fa-repeat</PlayerButton> 
       <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>
     );

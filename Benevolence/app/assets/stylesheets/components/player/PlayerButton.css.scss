@@ -2,6 +2,13 @@
 
 .ReactPlayerButton {
   border: 0;
+  padding: 0;
   color: $primary-color;
   background-color: rgba(0,0,0,0);
+  font-size: 3.5em;
+  display: inline-block;
+  margin-left: 5vw;
+  &:first-of-type {
+    margin-left: 1vw;
+  }
 }

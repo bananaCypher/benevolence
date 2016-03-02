@@ -24,7 +24,8 @@ var Page = React.createClass({
       playlistTracks: [],
       currentIndex: 0,
       currentSong: null,
-      repeat: 0
+      repeat: 0,
+      isLast: false
     };
   },
   componentDidMount: function(){
@@ -49,9 +50,14 @@ var Page = React.createClass({
     if (this.state.repeat == 2) {
       next = this.state.currentIndex;
     };
+    var last = false;
+    if (this.state.repeat == 0 && next == this.state.playlistTracks.length - 1) {
+      last = true;
+    }
     this.setState({
       currentIndex: next,
-      currentSong: this.state.playlistTracks[next]
+      currentSong: this.state.playlistTracks[next],
+      isLast: last
     });
   },
   prevSong: function(){
@@ -66,31 +72,44 @@ var Page = React.createClass({
     if (this.state.repeat == 2) {
       prev = this.state.currentIndex;
     };
+    var last = false;
+    if (this.state.repeat == 0 && prev == this.state.playlistTracks.length - 1) {
+      last = true;
+    }
     this.setState({
       currentIndex: prev,
-      currentSong: this.state.playlistTracks[prev]
+      currentSong: this.state.playlistTracks[prev],
+      isLast: last
     });
   },
   shufflePlaylist: function(){
     var newTracks = shuffleArray(this.state.playlistTracks);
     var newIndex = newTracks.indexOf(this.state.currentSong);
+    var last = false;
+    if (newIndex == newTracks.length - 1) {
+      this.setState({isLast: true});
+    }
     this.setState({
       playlistTracks: newTracks,
       currentIndex: newIndex
     });
   },
   toggleRepeat: function(){
-    newRepeat = this.state.repeat + 1;
+    var newRepeat = this.state.repeat + 1;
+    var last = false;
     if (newRepeat > 2) {
       newRepeat = 0;
+      if(this.currentIndex == this.state.playlistTracks.length - 1){
+        last = true;
+      }
     }
-    this.setState({repeat: newRepeat})
+    this.setState({repeat: newRepeat, isLast: last})
   },
   render: function() {
     return (
       <div>
         <h1>Benevolence</h1>
-        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist} repeat={this.toggleRepeat}></Player>
+        <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist} repeat={this.toggleRepeat} isLast={this.state.isLast}></Player>
       </div>
     );
   }

@@ -15,6 +15,8 @@ var Player = React.createClass({
         songDuration: this.player.duration
       });
     }.bind(this)
+    this.player.onended = this.next;
+    this.player.ondurationchange = this.autoplay;
   },
   componentWillReceiveProps: function(props) {
     Song.get(props.song, function(details){
@@ -23,7 +25,13 @@ var Player = React.createClass({
       }); 
     }.bind(this));
   },
-  componentDidUpdate: function(){
+  autoplay: function(){
+    if (this.state.playing == false || this.state.isLast == true) {
+      this.player.pause();
+    } else {
+      this.player.currentTime = 0;
+      this.player.play();
+    }
   },
   play: function() {
     this.player.play();
@@ -38,22 +46,16 @@ var Player = React.createClass({
     this.player.currentTime = 0;
   },
   next: function() {
-    this.props.nextSong();
-    if (this.state.playing == false) {
-      this.stop();
+    if (this.props.isLast == true || this.state.playing == false) {
+      this.setState({playing: false});
     } else {
-      this.player.currentTime = 0;
-      this.player.play();
+      this.setState({playing: true})
+      this.play();
     }
+    this.props.nextSong();
   },
   prev: function() {
     this.props.prevSong();
-    if (this.state.playing == false) {
-      this.stop();
-    } else {
-      this.player.currentTime = 0;
-      this.player.play();
-    }
   },
   seek: function(pos) {
     this.player.currentTime = pos

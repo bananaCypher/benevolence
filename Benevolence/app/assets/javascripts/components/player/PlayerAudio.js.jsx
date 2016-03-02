@@ -1,8 +1,8 @@
 var PlayerAudio = React.createClass({
   componentDidUpdate: function(){
-    if (this.props.playing == true) {
-      this.getDOMNode().play();
-    }
+    //if (this.props.playing == true) {
+    //  this.getDOMNode().play();
+    //}
   },
   render: function() {
     return (

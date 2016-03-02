@@ -2,8 +2,8 @@ var PlayerTrack = React.createClass({
   size: 20,
   trackClick: function(e) {
     var track = this.getDOMNode();
-    var x = e.clientX - track.offsetLeft;
-    var newPosition = x / track.offsetWidth * this.props.duration;
+    var x = e.clientX - track.offsetLeft - (this.size/2);
+    var newPosition = x / (track.offsetWidth - this.size) * this.props.duration;
     this.props.seek(newPosition);
   },
   trackNode: function(){

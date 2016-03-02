@@ -24,8 +24,9 @@ var PlayerPointer = React.createClass({
     this.props.clickTrack(e);
   },
   dragHandler: function(e){
-    var newLeft = e.clientX - this.props.size;
-    var maxLeft = this.getDOMNode().parentElement.offsetWidth - this.props.size;
+    var track = this.getDOMNode().parentElement;
+    var newLeft = e.clientX - track.offsetLeft - (this.props.size/2);
+    var maxLeft = track.offsetWidth - this.props.size;
     if (newLeft < 0) {
       newLeft = 0;
     }

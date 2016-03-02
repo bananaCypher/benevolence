@@ -114,8 +114,9 @@ var Page = React.createClass({
   },
   render: function() {
     return (
-      <div>
-        <h1>Benevolence</h1>
+      <div className='ReactPage'>
+        <BackgroundImage src='http://vanyaland.com/wp-content/uploads/2013/06/kflay.jpg'></BackgroundImage>
+        <Header></Header>
         <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist} repeat={this.toggleRepeat} isLast={this.state.isLast}></Player>
         <Playlist tracks={this.state.playlistTracks} current={this.state.currentSong} changeToTrack={this.changeToTrack}></Playlist>
       </div>

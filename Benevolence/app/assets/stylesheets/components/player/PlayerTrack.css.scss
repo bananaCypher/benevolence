@@ -1,0 +1,10 @@
+@import '../../application';
+
+.ReactPlayerTrack {
+  position: relative;
+  top: -2px;
+  width: 100vw;
+  background-color: $primary-dark-color;
+  height: 4px;
+  z-index: 10;
+}

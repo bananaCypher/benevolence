@@ -1,6 +1,10 @@
 var PlayerPointer = React.createClass({
   dragging: false,
   lastPosition: 0,
+  size: 0,
+  componentDidMount: function(){
+    this.size = this.getDOMNode().offsetWidth;
+  },
   getLeft: function() {
     var track = document.getElementById('player-track');
     if (!track) {
@@ -8,7 +12,7 @@ var PlayerPointer = React.createClass({
     }
     if (this.dragging == false) {
       var perc = this.props.position / this.props.duration;
-      this.lastPosition = (track.offsetWidth - this.props.size) * perc;
+      this.lastPosition = (track.offsetWidth - this.size) * perc;
     }
     return this.lastPosition + 'px';
   },
@@ -25,8 +29,8 @@ var PlayerPointer = React.createClass({
   },
   dragHandler: function(e){
     var track = this.getDOMNode().parentElement;
-    var newLeft = e.clientX - track.offsetLeft - (this.props.size/2);
-    var maxLeft = track.offsetWidth - this.props.size;
+    var newLeft = e.clientX - track.offsetLeft - (this.size/2);
+    var maxLeft = track.offsetWidth - this.size;
     if (newLeft < 0) {
       newLeft = 0;
     }
@@ -37,15 +41,10 @@ var PlayerPointer = React.createClass({
   },
   render: function() {
     var styles = {
-      backgroundColor: 'yellow',
-      width: this.props.size + 'px',
-      height: this.props.size + 'px',
-      borderRadius: '50%',
-      position: 'relative',
       left: this.getLeft()
     };
     return (
-      <div style={styles} onMouseDown={this.startDrag}></div> 
+      <div className='ReactPlayerPointer' style={styles} onMouseDown={this.startDrag}></div> 
     );
   }
 });

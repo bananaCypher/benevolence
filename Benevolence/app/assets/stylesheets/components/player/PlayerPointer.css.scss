@@ -1,0 +1,11 @@
+@import '../../application';
+
+.ReactPlayerPointer {
+  position: relative;
+  top: -6px;
+  background-color: $action-color;
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  z-index: 11;
+}

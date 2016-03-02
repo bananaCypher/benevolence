@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+
+$action-color: #ff0051;
+$default-color: #e2df9a;
+$primary-color: #ebe54d;
+$primary-dark-color: #fccd43;
+$dark-background-color: rgba(75, 73, 11, 0.8);
+$light-background-color: rgba(117, 116, 73, 0.8);
+
+$header-height: 100px;
+
+p.notice, p.alert{
+  margin: 0;
+}
+
+html, body{
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

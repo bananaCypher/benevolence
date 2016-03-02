@@ -10,14 +10,8 @@ var PlayerTrack = React.createClass({
     return this.getDOMNode();
   },
   render: function() {
-    var styles = {
-      backgroundColor: 'green',
-      width: '85vw',
-      height: this.size + 'px',
-      borderRadius: this.size + 'px'
-    };
     return (
-      <div style={styles} onClick={this.trackClick} id='player-track'>
+      <div className='ReactPlayerTrack' onClick={this.trackClick} id='player-track'>
         <PlayerPointer 
           position={this.props.position} 
           duration={this.props.duration}

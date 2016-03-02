@@ -1,0 +1,11 @@
+@import '../../application';
+
+.ReactPlaylist {
+  position: absolute;
+  height: calc(100vh - #{$header-height} - #{$header-height});
+  width: 100vw;
+  top: $header-height;
+  background-color: $light-background-color;
+  overflow: scroll;
+  color: $default-color;
+}

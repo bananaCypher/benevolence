@@ -57,9 +57,8 @@ var Playlist = React.createClass({
       list.push(<PlaylistElement song={song} artist={artist} current={current} changeTo={changeTo}></PlaylistElement>);
     }
     return (
-        <div>
-        <h1>Playlist</h1>
-        {list}
+        <div className='ReactPlaylist'>
+          {list}
         </div>
     );
   }

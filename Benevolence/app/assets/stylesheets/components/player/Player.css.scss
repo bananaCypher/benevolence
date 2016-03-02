@@ -1,0 +1,9 @@
+@import '../../application';
+
+.ReactPlayer {
+  height: $header-height;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  background-color: $dark-background-color;
+}

@@ -29,7 +29,7 @@ var Page = React.createClass({
     };
   },
   componentDidMount: function(){
-    Playlist.get(this.state.playlistID, function(details){
+    PlaylistHelper.get(this.state.playlistID, function(details){
       this.setState({
         playlistTitle: details.title, 
         playlistTracks: details.tracks,
@@ -110,6 +110,7 @@ var Page = React.createClass({
       <div>
         <h1>Benevolence</h1>
         <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist} repeat={this.toggleRepeat} isLast={this.state.isLast}></Player>
+        <Playlist tracks={this.state.playlistTracks}></Playlist>
       </div>
     );
   }

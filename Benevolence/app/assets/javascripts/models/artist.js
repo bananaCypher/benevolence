@@ -1,6 +1,6 @@
-PlaylistHelper = {
+ArtistHelper = {
   get: function(id, callback){
-    var URL = 'http://localhost:3000/api/playlists/' + id
+    var URL = 'http://localhost:3000/api/artists/' + id
     var request = new XMLHttpRequest();
     request.open('GET', URL);
     request.onload = function(){

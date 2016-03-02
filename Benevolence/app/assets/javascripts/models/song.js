@@ -1,4 +1,4 @@
-Song = {
+SongHelper = {
   get: function(id, callback){
     var URL = 'http://localhost:3000/api/songs/' + id
     var request = new XMLHttpRequest();

@@ -19,7 +19,7 @@ var Player = React.createClass({
     this.player.ondurationchange = this.autoplay;
   },
   componentWillReceiveProps: function(props) {
-    Song.get(props.song, function(details){
+    SongHelper.get(props.song, function(details){
       this.setState({
         songUrl: details.file_url 
       }); 

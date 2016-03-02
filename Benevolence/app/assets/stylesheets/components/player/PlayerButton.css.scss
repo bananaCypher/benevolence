@@ -12,3 +12,19 @@
     margin-left: 1vw;
   }
 }
+
+.ReactPlayerButtonActive {
+  color: $primary-dark-color;
+}
+
+.ReactPlayerButtonRepeatOne::after {
+  content: '1';
+  font-size: 0.4em;
+  color: tomato;
+  position: absolute;
+  right: 1.7em;
+  width: 0;
+  bottom: 2.2em;
+  margin: 0;
+  padding: 0;
+}

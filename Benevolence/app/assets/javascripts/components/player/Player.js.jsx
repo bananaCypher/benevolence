@@ -67,15 +67,31 @@ var Player = React.createClass({
     } else {
       playButton = <PlayerButton action={this.play}>fa-play</PlayerButton>
     }
+    var shuffleButton;
+    if (this.props.shuffled == true){
+      shuffleButton = <PlayerButton action={this.props.shuffle}>fa-random ReactPlayerButtonActive</PlayerButton> 
+    } else {
+      shuffleButton = <PlayerButton action={this.props.shuffle}>fa-random</PlayerButton> 
+    }
+    var repeatButton;
+    if (this.props.repeatMode != 0) {
+      if (this.props.repeatMode == 2) {
+        repeatButton = <PlayerButton action={this.props.repeat}>fa-repeat ReactPlayerButtonActive ReactPlayerButtonRepeatOne</PlayerButton> 
+      } else {
+        repeatButton = <PlayerButton action={this.props.repeat}>fa-repeat ReactPlayerButtonActive</PlayerButton> 
+      }
+    } else {
+      repeatButton = <PlayerButton action={this.props.repeat}>fa-repeat</PlayerButton> 
+    }
     return (
       <div className='ReactPlayer'>
       <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
-      <PlayerButton action={this.props.shuffle}>fa-random</PlayerButton> 
+      {shuffleButton}
       <PlayerButton action={this.prev}>fa-step-backward</PlayerButton> 
       {playButton}
       <PlayerButton action={this.stop}>fa-stop</PlayerButton> 
       <PlayerButton action={this.next}>fa-step-forward</PlayerButton> 
-      <PlayerButton action={this.props.repeat}>fa-repeat</PlayerButton> 
+      {repeatButton}
       <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>
     );

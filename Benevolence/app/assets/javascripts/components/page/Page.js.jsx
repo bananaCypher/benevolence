@@ -105,12 +105,19 @@ var Page = React.createClass({
     }
     this.setState({repeat: newRepeat, isLast: last})
   },
+  changeToTrack: function(track){
+    var index = this.state.playlistTracks.indexOf(track);
+    this.setState({
+      currentSong: this.state.playlistTracks[index],
+      currentIndex: index
+    });
+  },
   render: function() {
     return (
       <div>
         <h1>Benevolence</h1>
         <Player song={this.state.currentSong} nextSong={this.nextSong} prevSong={this.prevSong} shuffle={this.shufflePlaylist} repeat={this.toggleRepeat} isLast={this.state.isLast}></Player>
-        <Playlist tracks={this.state.playlistTracks}></Playlist>
+        <Playlist tracks={this.state.playlistTracks} current={this.state.currentSong} changeToTrack={this.changeToTrack}></Playlist>
       </div>
     );
   }

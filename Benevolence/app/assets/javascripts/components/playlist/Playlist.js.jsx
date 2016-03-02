@@ -2,7 +2,8 @@ var Playlist = React.createClass({
   getInitialState: function(){
     return({
       songs: {},
-      artists: {}
+      artists: {},
+      current: '',
     })
   },
   componentDidMount: function(){
@@ -30,7 +31,7 @@ var Playlist = React.createClass({
   getArtistData: function(id){
     ArtistHelper.get(id, function(artist){
       var artistObj = {
-        title: artist.name,
+        name: artist.name,
         smallArt: artist.small_art
       };
       var newArtists = this.state.artists;
@@ -38,12 +39,22 @@ var Playlist = React.createClass({
       this.setState({artists: newArtists})
     }.bind(this));  
   },
+  trackChangeHandler: function(track){
+    return function(){
+      this.props.changeToTrack(track);
+    }.bind(this)
+  },
   render: function() {
     var list = [];
-    for (var key in this.state.songs) {
-      var song = this.state.songs[key];
+    for (var track of this.props.tracks) {
+      var song = this.state.songs[track] || {};
       var artist = this.state.artists[song.artist] || {};
-      list.push(<PlaylistElement song={song} artist={artist}></PlaylistElement>);
+      var current = false;
+      if (this.props.current == track){
+        current = true; 
+      }
+      var changeTo = this.trackChangeHandler(track);
+      list.push(<PlaylistElement song={song} artist={artist} current={current} changeTo={changeTo}></PlaylistElement>);
     }
     return (
         <div>

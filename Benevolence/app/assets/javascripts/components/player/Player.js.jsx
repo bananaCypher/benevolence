@@ -61,15 +61,20 @@ var Player = React.createClass({
     this.player.currentTime = pos
   },
   render: function() {
+    var playButton;
+    if (this.state.playing == true) {
+      playButton = <PlayerButton action={this.pause}>fa-pause</PlayerButton> 
+    } else {
+      playButton = <PlayerButton action={this.play}>fa-play</PlayerButton>
+    }
     return (
       <div className='ReactPlayer'>
       <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
       <PlayerButton action={this.props.shuffle}>fa-random</PlayerButton> 
       <PlayerButton action={this.prev}>fa-step-backward</PlayerButton> 
-      <PlayerButton action={this.play}>fa-play</PlayerButton>
-      <PlayerButton action={this.pause}>fa-pause</PlayerButton> 
-      <PlayerButton action={this.next}>fa-step-forward</PlayerButton> 
+      {playButton}
       <PlayerButton action={this.stop}>fa-stop</PlayerButton> 
+      <PlayerButton action={this.next}>fa-step-forward</PlayerButton> 
       <PlayerButton action={this.props.repeat}>fa-repeat</PlayerButton> 
       <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>

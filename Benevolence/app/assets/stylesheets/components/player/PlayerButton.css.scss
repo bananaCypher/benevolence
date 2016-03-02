@@ -12,6 +12,38 @@
     margin-left: 1vw;
   }
 }
+@media only screen and (min-width: 480px) {
+  .ReactPlayerButton {
+    margin-left: 8vw;
+    &:first-of-type {
+      margin-left: 3vw;
+    }
+  }
+}
+@media only screen and (min-width: 600px) {
+  .ReactPlayerButton {
+    margin-left: 10vw;
+    &:first-of-type {
+      margin-left: 3vw;
+    }
+  }
+}
+@media only screen and (min-width: 992px) {
+  .ReactPlayerButton {
+    margin-left: 13vw;
+    &:first-of-type {
+      margin-left: 4vw;
+    }
+  }
+}
+@media only screen and (min-width: 1224px) {
+  .ReactPlayerButton {
+    margin-left: 14vw;
+    &:first-of-type {
+      margin-left: 4vw;
+    }
+  }
+}
 
 .ReactPlayerButtonActive {
   color: $primary-dark-color;

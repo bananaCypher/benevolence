@@ -27,7 +27,8 @@ var Page = React.createClass({
       repeat: 0,
       isLast: false,
       shuffled: false,
-      shouldPlay: false
+      shouldPlay: false,
+      showingPlaylist: false
     };
   },
   componentDidMount: function(){
@@ -116,6 +117,9 @@ var Page = React.createClass({
       shouldPlay: true
     });
   },
+  togglePlaylist: function(){
+    this.setState({showingPlaylist: !this.state.showingPlaylist});
+  },
   render: function() {
     return (
       <div className='ReactPage'>
@@ -132,7 +136,13 @@ var Page = React.createClass({
           repeatMode={this.state.repeat}
           shouldPlay={this.state.shouldPlay}>
         </Player>
-        <Playlist tracks={this.state.playlistTracks} current={this.state.currentSong} changeToTrack={this.changeToTrack}></Playlist>
+        <Playlist 
+          showing={this.state.showingPlaylist} 
+          tracks={this.state.playlistTracks} 
+          current={this.state.currentSong} 
+          changeToTrack={this.changeToTrack}
+          togglePlaylist={this.togglePlaylist}>
+        </Playlist>
       </div>
     );
   }

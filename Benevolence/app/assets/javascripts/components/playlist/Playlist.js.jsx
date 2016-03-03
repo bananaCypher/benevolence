@@ -56,10 +56,17 @@ var Playlist = React.createClass({
       var changeTo = this.trackChangeHandler(track);
       list.push(<PlaylistElement song={song} artist={artist} current={current} changeTo={changeTo}></PlaylistElement>);
     }
-    return (
-        <div className='ReactPlaylist'>
-          {list}
-        </div>
-    );
+    if (this.props.showing == true) {
+      return (
+          <div className='ReactPlaylist'>
+            <PlaylistHideButton hide={this.props.togglePlaylist}></PlaylistHideButton>
+            {list}
+          </div>
+      );
+    } else {
+      return (
+        <PlaylistShowButton show={this.props.togglePlaylist}></PlaylistShowButton>
+      );
+    }
   }
 });

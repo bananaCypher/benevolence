@@ -21,10 +21,15 @@ class SongsController < ApplicationController
   end
 
   def create
+    metadata = JSON.parse(params[:metadata])
     begin
-      song = Song.new(song_params)  
+      song = Song.new(title: metadata['title'])  
       song.user = current_user
       song.save
+      uploaded_file = params[:file]
+      File.open(song.file_path, 'wb') do |file|
+          file.write(uploaded_file.read)
+      end
       render json: {status: 'success', message: 'Song was successfully created'}
     rescue
       render json: {status: 'error', message: 'Failed to create song'}
@@ -46,7 +51,7 @@ class SongsController < ApplicationController
 
   private
   def song_params
-    params.require(:song).permit(:title)
+    params.require().permit(:metadata)
   end
 
   def render_not_found

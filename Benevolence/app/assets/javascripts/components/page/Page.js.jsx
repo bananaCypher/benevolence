@@ -28,7 +28,9 @@ var Page = React.createClass({
       isLast: false,
       shuffled: false,
       shouldPlay: false,
-      showingPlaylist: false
+      showingPlaylist: false,
+      menuShowing: false,
+      page: 'player'
     };
   },
   componentDidMount: function(){
@@ -120,26 +122,57 @@ var Page = React.createClass({
   togglePlaylist: function(){
     this.setState({showingPlaylist: !this.state.showingPlaylist});
   },
+  toggleMenu: function(){
+    this.setState({menuShowing: !this.state.menuShowing});
+  },
+  showPlayerPage: function(){
+    this.setState({page: 'player'})
+  },
+  showUploadPage: function(){
+    this.setState({page: 'upload'})
+  },
+  playerPage: function(){
+    return (
+      <PlayerPage
+        currentSong={this.state.currentSong}
+        isLast={this.state.isLast}
+        shuffled={this.state.shuffled}
+        repeat={this.state.repeat}
+        shouldPlay={this.state.shouldPlay}
+        showingPlaylist={this.state.showingPlaylist}
+        playlistTracks={this.state.playlistTracks}
+        nextSong={this.nextSong}
+        prevSong={this.prevSong}
+        shufflePlaylist={this.shufflePlaylist}
+        toggleRepeat={this.toggleRepeat}
+        changeToTrack={this.changeToTrack}
+        togglePlaylist={this.togglePlaylist}>
+      </PlayerPage>
+    )
+  },
+  uploadPage: function(){
+    return (
+      <UploadPage></UploadPage>
+    )
+  },
   render: function() {
+    var page;
+    switch(this.state.page) {
+      case 'player':
+        page = this.playerPage();
+        break;
+      case 'upload':
+        page = this.uploadPage();
+        break;
+      default:
+        page = this.playerPage();
+    }
     return (
       <div className='ReactPage'>
         <BackgroundImage src='http://vanyaland.com/wp-content/uploads/2013/06/kflay.jpg'></BackgroundImage>
-        <Header></Header>
-        <PlayerPage
-          currentSong={this.state.currentSong}
-          isLast={this.state.isLast}
-          shuffled={this.state.shuffled}
-          repeat={this.state.repeat}
-          shouldPlay={this.state.shouldPlay}
-          showingPlaylist={this.state.showingPlaylist}
-          playlistTracks={this.state.playlistTracks}
-          nextSong={this.nextSong}
-          prevSong={this.prevSong}
-          shufflePlaylist={this.shufflePlaylist}
-          toggleRepeat={this.toggleRepeat}
-          changeToTrack={this.changeToTrack}
-          togglePlaylist={this.togglePlaylist}>
-        </PlayerPage>
+        <Header toggleMenu={this.toggleMenu}></Header>
+        {page}
+        <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage}></PageMenu>
       </div>
     );
   }

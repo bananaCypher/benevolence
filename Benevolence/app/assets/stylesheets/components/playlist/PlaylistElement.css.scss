@@ -1,0 +1,38 @@
+@import '../../application';
+
+.ReactPlaylistElement {
+  height: 50px;
+  display:flex;
+  align-items: center;
+  div {
+    position: absolute;
+    height: 50px;
+    background-image: url("/playicon.png");
+    background-size: cover;
+    background-color: rgba(0,0,0,0.4);
+    width: 50px;
+    display: none;
+    left: 0;
+    &:hover{
+      cursor: pointer;
+      display: block;
+    }
+  }
+  img {
+    height: 100%;
+    &:hover {
+      cursor: pointer;
+      & + div {
+        display: block;
+      }
+    }
+  }
+  h3 {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
+.ReactPlaylistElementPlaying {
+  background-color: $light-background-color;
+}

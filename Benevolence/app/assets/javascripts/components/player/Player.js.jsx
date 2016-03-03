@@ -24,6 +24,11 @@ var Player = React.createClass({
         songUrl: details.file_url 
       }); 
     }.bind(this));
+    if (props.shouldPlay == true){
+      this.setState({
+        playing: true
+      });
+    }
   },
   autoplay: function(){
     if (this.state.playing == false || this.state.isLast == true) {

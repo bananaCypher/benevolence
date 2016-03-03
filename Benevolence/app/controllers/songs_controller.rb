@@ -51,7 +51,7 @@ class SongsController < ApplicationController
 
   private
   def song_params
-    params.require().permit(:metadata)
+    params.require(:song).permit(:title)
   end
 
   def render_not_found

@@ -125,24 +125,21 @@ var Page = React.createClass({
       <div className='ReactPage'>
         <BackgroundImage src='http://vanyaland.com/wp-content/uploads/2013/06/kflay.jpg'></BackgroundImage>
         <Header></Header>
-        <Player 
-          song={this.state.currentSong}
+        <PlayerPage
+          currentSong={this.state.currentSong}
+          isLast={this.state.isLast}
+          shuffled={this.state.shuffled}
+          repeat={this.state.repeat}
+          shouldPlay={this.state.shouldPlay}
+          showingPlaylist={this.state.showingPlaylist}
+          playlistTracks={this.state.playlistTracks}
           nextSong={this.nextSong}
           prevSong={this.prevSong}
-          shuffle={this.shufflePlaylist} 
-          repeat={this.toggleRepeat} 
-          isLast={this.state.isLast} 
-          shuffled={this.state.shuffled}
-          repeatMode={this.state.repeat}
-          shouldPlay={this.state.shouldPlay}>
-        </Player>
-        <Playlist 
-          showing={this.state.showingPlaylist} 
-          tracks={this.state.playlistTracks} 
-          current={this.state.currentSong} 
+          shufflePlaylist={this.shufflePlaylist}
+          toggleRepeat={this.toggleRepeat}
           changeToTrack={this.changeToTrack}
           togglePlaylist={this.togglePlaylist}>
-        </Playlist>
+        </PlayerPage>
       </div>
     );
   }

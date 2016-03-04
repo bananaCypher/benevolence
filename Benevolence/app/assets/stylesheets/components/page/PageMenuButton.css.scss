@@ -1,0 +1,10 @@
+@import '../../application';
+
+.ReactPageMenuButton {
+  float: right;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  font-size: 3em;
+  color: $primary-dark-color;
+  margin-top: calc(#{$header-height} / 4);
+}

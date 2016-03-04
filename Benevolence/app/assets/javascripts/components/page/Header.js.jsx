@@ -3,8 +3,8 @@ var Header = React.createClass({
     return (
       <div className='ReactHeader'>
         <img src='/logo.png'/>
-        <h1>Title</h1>
         <PageMenuButton toggleMenu={this.props.toggleMenu}></PageMenuButton>
+        <h1>Title</h1>
       </div>
     );
   }

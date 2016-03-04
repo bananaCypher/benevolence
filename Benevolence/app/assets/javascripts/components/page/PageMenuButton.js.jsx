@@ -1,7 +1,7 @@
 var PageMenuButton = React.createClass({
   render: function() {
     return (
-        <button onClick={this.props.toggleMenu}><i className='fa fa-bars'></i></button>
+        <button className='ReactPageMenuButton' onClick={this.props.toggleMenu}><i className='fa fa-bars'></i></button>
     );
   }
 });

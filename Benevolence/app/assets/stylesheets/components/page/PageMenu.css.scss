@@ -1,0 +1,27 @@
+@import '../../application';
+
+.ReactPageMenu {
+  position: absolute;
+  margin: 0;
+  height: calc(100vh - #{$header-height} - #{$header-height});
+  width: 100vw;
+  top: $header-height;
+  right: 0;
+  background-color: $dark-background-color;
+  overflow: scroll;
+  color: $action-color;
+  padding: 0;
+  list-style-type: none;
+  button {
+    border: 0;
+    background-color: rgba(0,0,0,0);
+    color: $action-color;
+    font-size: 1.2em;
+  }
+}
+
+@media only screen and (min-width: 320px) {
+  .ReactPageMenu {
+    width: 320px;
+  }
+}

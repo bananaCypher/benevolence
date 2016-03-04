@@ -28,7 +28,6 @@ var Page = React.createClass({
       isLast: false,
       shuffled: false,
       shouldPlay: false,
-      showingPlaylist: false,
       menuShowing: false,
       page: 'player'
     };
@@ -119,32 +118,21 @@ var Page = React.createClass({
       shouldPlay: true
     });
   },
-  togglePlaylist: function(){
-    this.setState({showingPlaylist: !this.state.showingPlaylist});
-  },
   toggleMenu: function(){
     this.setState({menuShowing: !this.state.menuShowing});
   },
   showPlayerPage: function(){
-    this.setState({page: 'player'})
+    this.setState({page: 'player', menuShowing: false})
   },
   showUploadPage: function(){
-    this.setState({page: 'upload'})
+    this.setState({page: 'upload', menuShowing: false})
   },
   playerPage: function(){
     return (
       <PlayerPage
         currentSong={this.state.currentSong}
-        isLast={this.state.isLast}
-        shuffled={this.state.shuffled}
-        repeat={this.state.repeat}
-        shouldPlay={this.state.shouldPlay}
         showingPlaylist={this.state.showingPlaylist}
         playlistTracks={this.state.playlistTracks}
-        nextSong={this.nextSong}
-        prevSong={this.prevSong}
-        shufflePlaylist={this.shufflePlaylist}
-        toggleRepeat={this.toggleRepeat}
         changeToTrack={this.changeToTrack}
         togglePlaylist={this.togglePlaylist}>
       </PlayerPage>
@@ -173,6 +161,17 @@ var Page = React.createClass({
         <Header toggleMenu={this.toggleMenu}></Header>
         {page}
         <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage}></PageMenu>
+        <Player 
+          song={this.state.currentSong}
+          nextSong={this.nextSong}
+          prevSong={this.prevSong}
+          shuffle={this.shufflePlaylist} 
+          repeat={this.toggleRepeat} 
+          isLast={this.state.isLast} 
+          shuffled={this.state.shuffled}
+          repeatMode={this.state.repeat}
+          shouldPlay={this.state.shouldPlay}>
+        </Player>
       </div>
     );
   }

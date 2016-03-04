@@ -29,7 +29,10 @@ var Page = React.createClass({
       shuffled: false,
       shouldPlay: false,
       menuShowing: false,
-      page: 'player'
+      page: 'player',
+      backgroundImage: '/space.jpg',
+      songs: {},
+      artists: {}
     };
   },
   componentDidMount: function(){
@@ -41,6 +44,41 @@ var Page = React.createClass({
         currentIndex: 0
       }) 
     }.bind(this));
+  },
+  componentDidUpdate: function(prevProps, prevState){
+    if (prevState.playlistTracks != this.state.playlistTracks) {
+      for (var track of this.state.playlistTracks) {
+        this.getSongData(track);
+      }
+    }
+    if (prevState.currentSong != this.state.currentSong) {
+      this.setBackgroundImage();
+    }
+  },
+  getSongData: function(id){
+    SongHelper.get(id, function(song){
+      var songObj = {
+        title: song.title,
+        artist: song.artist
+      };
+      var newSongs = this.state.songs;
+      newSongs[id] = songObj;
+      this.setState({songs: newSongs})
+      this.getArtistData(songObj.artist);
+    }.bind(this));  
+  },
+  getArtistData: function(id){
+    ArtistHelper.get(id, function(artist){
+      var artistObj = {
+        name: artist.name,
+        smallArt: artist.small_art,
+        largeArt: artist.large_art
+      };
+      var newArtists = this.state.artists;
+      newArtists[id] = artistObj;
+      this.setState({artists: newArtists});
+      this.setBackgroundImage();
+    }.bind(this));  
   },
   nextSong: function(){
     var next = this.state.currentIndex + 1;
@@ -118,6 +156,11 @@ var Page = React.createClass({
       shouldPlay: true
     });
   },
+  setBackgroundImage: function(){
+    var song = this.state.songs[this.state.currentSong];
+    var artist = this.state.artists[song.artist];
+    this.setState({backgroundImage: artist.largeArt})
+  },
   toggleMenu: function(){
     this.setState({menuShowing: !this.state.menuShowing});
   },
@@ -134,7 +177,10 @@ var Page = React.createClass({
         showingPlaylist={this.state.showingPlaylist}
         playlistTracks={this.state.playlistTracks}
         changeToTrack={this.changeToTrack}
-        togglePlaylist={this.togglePlaylist}>
+        togglePlaylist={this.togglePlaylist}
+        setBackgroundImage={this.setBackgroundImage}
+        songs={this.state.songs}
+        artists={this.state.artists}>
       </PlayerPage>
     )
   },
@@ -157,7 +203,7 @@ var Page = React.createClass({
     }
     return (
       <div className='ReactPage'>
-        <BackgroundImage src='http://vanyaland.com/wp-content/uploads/2013/06/kflay.jpg'></BackgroundImage>
+        <BackgroundImage src={this.state.backgroundImage}></BackgroundImage>
         <Header toggleMenu={this.toggleMenu}></Header>
         {page}
         <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage}></PageMenu>

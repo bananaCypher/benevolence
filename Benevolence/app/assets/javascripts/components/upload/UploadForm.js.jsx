@@ -54,12 +54,16 @@ var UploadForm = React.createClass({
         <UploadFormFields file={file}></UploadFormFields>    
       )
     }
+    var uploadClass = 'ReactUploadFormButton'
+    if (this.state.files.length == 0){
+      var uploadClass = 'ReactUploadFormButtonDisabled'
+    }
     return (
       <div>
         <form className='ReactUploadForm' onSubmit={this.formHandler}>
-          <input type="file" name="upload-file" multiple onChange={this.fileUpdater}/> 
+          <label htmlFor="upload-file"><i className='fa fa-files-o'> Select Files</i></label><input type="file" id="upload-file" name="upload-file" multiple onChange={this.fileUpdater}/> 
           {formFields}
-          <button>Upload</button>
+          <button className={uploadClass}><i className='fa fa-upload'></i> Upload</button>
         </form>
       </div>
     );

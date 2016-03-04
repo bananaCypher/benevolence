@@ -8,6 +8,28 @@
   overflow: scroll;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-around;
+  background-color: $light-background-color;
+  input[type='file'] {
+    display: none;
+  }
+  label[for='upload-file'] {
+    font-size: 2em;
+    color: $primary-color;
+  }
+  button {
+    border: 0;
+    margin: 0;
+    padding: 15px;
+    font-size: 2em;
+    background-color: rgba(0,0,0,0)
+  }
 }
 
+.ReactUploadFormButton {
+  color: $action-color;
+}
+.ReactUploadFormButtonDisabled {
+  color: grey;
+}

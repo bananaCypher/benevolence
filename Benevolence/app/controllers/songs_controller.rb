@@ -1,3 +1,4 @@
+require 'net/http'
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -22,7 +23,7 @@ class SongsController < ApplicationController
 
   def create
     metadata = JSON.parse(params[:metadata])
-    begin
+    #begin
       song = Song.new(title: metadata['title'])  
       song.user = current_user
       song.save
@@ -30,10 +31,13 @@ class SongsController < ApplicationController
       File.open(song.file_path, 'wb') do |file|
           file.write(uploaded_file.read)
       end
+      artist = get_linked_artist(metadata['artist'])
+      song.artist = artist
+      song.save
       render json: {status: 'success', message: 'Song was successfully created'}
-    rescue
-      render json: {status: 'error', message: 'Failed to create song'}
-    end
+    #rescue
+      #render json: {status: 'error', message: 'Failed to create song'}
+    #end
   end
 
   def update
@@ -62,5 +66,30 @@ class SongsController < ApplicationController
     song = Song.find(params[:id])
     render_not_found if !song
     return song
+  end
+
+  def get_linked_artist(name)
+    artists = Artist.where(name: name)
+    if (artists.empty?)
+      return scrape_artist(name)
+    else
+      return artists[0]
+    end
+  end
+
+  def scrape_artist(name)
+    key = Rails.application.config.audioDB_api_key
+    url = URI.escape "http://www.theaudiodb.com/api/v1/json/#{key}/search.php?s=#{name}"
+    result = Net::HTTP.get(
+      URI.parse(url)
+    )
+    artist_details = JSON.parse(result)['artists'][0]
+    artist = Artist.create(
+      name: name, 
+      small_art: artist_details['strArtistThumb'], 
+      large_art: artist_details['strArtistFanart'], 
+      biography: artist_details['strBiographyEN']
+    )
+    return artist
   end
 end

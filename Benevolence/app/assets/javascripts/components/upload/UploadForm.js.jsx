@@ -21,6 +21,8 @@ var UploadForm = React.createClass({
         var response = JSON.parse(request.responseText);
         if(response.status == 'success') {
           e.target.classList.add("ReactUploadFormUploaded");
+        } else {
+          e.target.classList.add("ReactUploadFormFailed");
         }
       } else {
         e.target.classList.add("ReactUploadFormFailed");

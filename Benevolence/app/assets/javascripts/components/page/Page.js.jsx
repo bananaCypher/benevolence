@@ -201,10 +201,19 @@ var Page = React.createClass({
       default:
         page = this.playerPage();
     }
+    var song = this.state.songs[this.state.currentSong];
+    var artist = '';
+    if (song) {
+      artist = this.state.artists[song.artist]
+    }
     return (
       <div className='ReactPage'>
         <BackgroundImage src={this.state.backgroundImage}></BackgroundImage>
-        <Header toggleMenu={this.toggleMenu}></Header>
+        <Header 
+          toggleMenu={this.toggleMenu} 
+          artist={artist}
+          song={song}>
+        </Header>
         {page}
         <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage}></PageMenu>
         <Player 

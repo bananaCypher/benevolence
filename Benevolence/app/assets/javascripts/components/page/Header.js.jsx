@@ -1,10 +1,14 @@
 var Header = React.createClass({
   render: function() {
+    var title = 'Benevolence';
+    if(this.props.artist && this.props.song){
+      title = this.props.artist.name + ' - ' + this.props.song.title; 
+    }
     return (
       <div className='ReactHeader'>
         <img src='/logo.png'/>
         <PageMenuButton toggleMenu={this.props.toggleMenu}></PageMenuButton>
-        <h1>Title</h1>
+        <h2>{title}</h2>
       </div>
     );
   }

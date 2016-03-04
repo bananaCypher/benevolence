@@ -1,6 +1,7 @@
 var UploadForm = React.createClass({
   formHandler: function(e){
     e.preventDefault();
+    e.target.classList.add("ReactUploadFormUploading");
     var metaData = {
       title: document.getElementsByName('upload-title')[0].value,
       artist: document.getElementsByName('upload-artist')[0].value,
@@ -15,17 +16,21 @@ var UploadForm = React.createClass({
     var request = new XMLHttpRequest();
     request.open('POST', '/api/songs/');
     request.onload = function(){
+      e.target.classList.remove("ReactUploadFormUploading");
       if (request.status === 200) {
-        console.log(request); 
+        var response = JSON.parse(request.responseText);
+        if(response.status == 'success') {
+          e.target.classList.add("ReactUploadFormUploaded");
+        }
       } else {
-        console.log(request); 
+        e.target.classList.add("ReactUploadFormFailed");
       }
     };
     request.send(data);
   },
   render: function() {
     return (
-        <form onSubmit={this.formHandler}>
+        <form className='ReactUploadForm' onSubmit={this.formHandler}>
           <input type="file" name="upload-file"/> 
           <input type="text" name="upload-title" placeholder='Title'/>
           <input type="text" name="upload-artist" placeholder='Artist'/>

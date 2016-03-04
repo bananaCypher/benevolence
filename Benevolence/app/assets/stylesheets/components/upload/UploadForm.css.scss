@@ -1,0 +1,45 @@
+@import '../../application';
+
+.ReactUploadForm {
+  width: 225px;
+  background-color: $light-background-color;
+  button, input{
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+@keyframes uploading {
+  50%  {background: repeating-linear-gradient(
+    45deg, 
+    #465298, 
+    #465298 10px, 
+    #606dbc 10px, 
+    #606dbc 20px
+  );}
+  100% {background: repeating-linear-gradient(
+    45deg, 
+    #606dbc, 
+    #606dbc 10px, 
+    #465298 10px, 
+    #465298 20px
+  );}
+}
+.ReactUploadFormUploading {
+  background: repeating-linear-gradient(
+    45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
+  animation: uploading 2s infinite;
+}
+
+.ReactUploadFormUploaded {
+  background-color: rgba(79, 138, 16, 0.8)
+}
+
+.ReactUploadFormFailed {
+  background-color: rgba(216, 0, 12, 0.8)
+}

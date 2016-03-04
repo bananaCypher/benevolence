@@ -164,6 +164,9 @@ var Page = React.createClass({
   toggleMenu: function(){
     this.setState({menuShowing: !this.state.menuShowing});
   },
+  showHomePage: function(){
+    this.setState({page: 'home', menuShowing: false})
+  },
   showPlayerPage: function(){
     this.setState({page: 'player', menuShowing: false})
   },
@@ -192,6 +195,9 @@ var Page = React.createClass({
   render: function() {
     var page;
     switch(this.state.page) {
+      case 'home':
+        page = '';
+        break;
       case 'player':
         page = this.playerPage();
         break;
@@ -215,7 +221,7 @@ var Page = React.createClass({
           song={song}>
         </Header>
         {page}
-        <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage}></PageMenu>
+        <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage} home={this.showHomePage}></PageMenu>
         <Player 
           song={this.state.currentSong}
           nextSong={this.nextSong}

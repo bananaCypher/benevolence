@@ -2,12 +2,12 @@ class ArtistsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    render json: Artist.all
+    render json: Artist.all, methods: :unique_songs
   end
 
   def show
     artist = get_artist || return
-    render json: artist
+    render json: artist, methods: :unique_songs
   end
 
   def create

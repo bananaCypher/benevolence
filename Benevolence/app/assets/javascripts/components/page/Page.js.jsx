@@ -29,7 +29,7 @@ var Page = React.createClass({
       shuffled: false,
       shouldPlay: false,
       menuShowing: false,
-      page: 'player',
+      page: 'home',
       backgroundImage: '/space.jpg',
       songs: {},
       artists: {}
@@ -205,7 +205,7 @@ var Page = React.createClass({
         page = this.uploadPage();
         break;
       default:
-        page = this.playerPage();
+        page = '';
     }
     var song = this.state.songs[this.state.currentSong];
     var artist = '';

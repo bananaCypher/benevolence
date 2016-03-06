@@ -1,0 +1,23 @@
+@import '../../application';
+
+.ReactSongPage {
+  position: absolute;
+  height: calc(100vh - #{$header-height} - #{$header-height});
+  width: 100vw;
+  top: $header-height;
+  overflow: scroll;
+  background-color: $light-background-color;
+  color: $default-color;
+  img {
+    width: 200px;
+    display: block;
+    margin: 10px auto;
+  }
+  h2 {
+    text-align: center;
+  }
+  a {
+    display: block;
+    text-align: center;
+  }
+}

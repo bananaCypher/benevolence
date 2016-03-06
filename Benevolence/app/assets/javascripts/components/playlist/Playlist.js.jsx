@@ -11,6 +11,11 @@ var Playlist = React.createClass({
       this.props.changeToTrack(track);
     }.bind(this)
   },
+  songPageHandler(track){
+    return function(){
+      this.props.songPage(track);
+    }.bind(this)
+  },
   render: function() {
     var list = [];
     for (var track of this.props.tracks) {
@@ -21,7 +26,8 @@ var Playlist = React.createClass({
         current = true; 
       }
       var changeTo = this.trackChangeHandler(track);
-      list.push(<PlaylistElement song={song} artist={artist} current={current} changeTo={changeTo}></PlaylistElement>);
+      var songPage = this.songPageHandler(track);
+      list.push(<PlaylistElement song={song} artist={artist} current={current} changeTo={changeTo} songPage={songPage}></PlaylistElement>);
     }
     return (
       <div className='ReactPlaylist'>

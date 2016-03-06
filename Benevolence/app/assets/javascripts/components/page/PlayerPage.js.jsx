@@ -10,7 +10,8 @@ var PlayerPage = React.createClass({
             togglePlaylist={this.props.togglePlaylist}
             setBackgroundImage={this.props.setBackgroundImage}
             songs={this.props.songs}
-            artists={this.props.artists}>
+            artists={this.props.artists}
+            songPage={this.props.songPage}>
           </Playlist>
         </div>
     );

@@ -32,7 +32,8 @@ var Page = React.createClass({
       page: 'home',
       backgroundImage: '/space.jpg',
       songs: {},
-      artists: {}
+      artists: {},
+      displayingSong: ''
     };
   },
   componentDidMount: function(){
@@ -173,6 +174,9 @@ var Page = React.createClass({
   showUploadPage: function(){
     this.setState({page: 'upload', menuShowing: false})
   },
+  changeToSongPage: function(track){
+    this.setState({page: 'song', displayingSong: track})
+  },
   playerPage: function(){
     return (
       <PlayerPage
@@ -183,13 +187,21 @@ var Page = React.createClass({
         togglePlaylist={this.togglePlaylist}
         setBackgroundImage={this.setBackgroundImage}
         songs={this.state.songs}
-        artists={this.state.artists}>
+        artists={this.state.artists}
+        songPage={this.changeToSongPage}>
       </PlayerPage>
     )
   },
   uploadPage: function(){
     return (
       <UploadPage></UploadPage>
+    )
+  },
+  songPage: function(){
+    var song = this.state.songs[this.state.displayingSong];
+    var artist = this.state.artists[song.artist];
+    return (
+      <SongPage song={song} artist={artist}></SongPage>
     )
   },
   render: function() {
@@ -203,6 +215,9 @@ var Page = React.createClass({
         break;
       case 'upload':
         page = this.uploadPage();
+        break;
+      case 'song':
+        page = this.songPage();
         break;
       default:
         page = '';

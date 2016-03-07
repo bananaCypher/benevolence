@@ -198,6 +198,9 @@ var Page = React.createClass({
   showUploadPage: function(){
     this.setState({page: 'upload', menuShowing: false})
   },
+  showSearchPage: function(){
+    this.setState({page: 'search', menuShowing: false})
+  },
   changeToSongPage: function(track){
     this.setState({page: 'song', displayingSong: track})
   },
@@ -237,6 +240,11 @@ var Page = React.createClass({
       <ArtistPage artist={artist} songPage={this.changeToSongPage}></ArtistPage>
     )
   },
+  searchPage: function(){
+    return (
+      <SearchPage songPage={this.changeToSongPage} artistPage={this.changeToArtistPage} playSong={this.playSongNow}></SearchPage>
+    )
+  },
   render: function() {
     var page;
     switch(this.state.page) {
@@ -255,6 +263,9 @@ var Page = React.createClass({
       case 'artist':
         page = this.artistPage();
         break;
+      case 'search':
+        page = this.searchPage();
+        break;
       default:
         page = '';
     }
@@ -272,7 +283,13 @@ var Page = React.createClass({
           song={song}>
         </Header>
         {page}
-        <PageMenu showing={this.state.menuShowing} player={this.showPlayerPage} upload={this.showUploadPage} home={this.showHomePage}></PageMenu>
+        <PageMenu
+          showing={this.state.menuShowing} 
+          player={this.showPlayerPage} 
+          upload={this.showUploadPage} 
+          home={this.showHomePage}
+          search={this.showSearchPage}>
+        </PageMenu>
         <Player 
           song={this.state.currentSong}
           nextSong={this.nextSong}

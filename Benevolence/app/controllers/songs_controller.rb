@@ -23,7 +23,7 @@ class SongsController < ApplicationController
 
   def create
     metadata = JSON.parse(params[:metadata])
-    #begin
+    begin
       song = Song.new(title: metadata['title'])  
       song.user = current_user
       song.save
@@ -35,9 +35,9 @@ class SongsController < ApplicationController
       song.artist = artist
       song.save
       render json: {status: 'success', message: 'Song was successfully created'}
-    #rescue
-      #render json: {status: 'error', message: 'Failed to create song'}
-    #end
+    rescue
+      render json: {status: 'error', message: 'Failed to create song'}
+    end
   end
 
   def update
@@ -51,6 +51,28 @@ class SongsController < ApplicationController
     song = get_song || return
     song.destroy
     render json: {status: 'success'}
+  end
+
+  def search
+    term = params[:term]
+    songs = Song.where(title: /#{term}/i)
+    songs = songs.map do |song|
+      if song.album
+        album = song.album.id.to_s
+      end
+      {
+        id: song.id.to_s,
+        title: song.title,
+        artist: {
+          id: song.artist.id.to_s,
+          name: song.artist.name,
+          small_art: song.artist.small_art
+        },
+        album: album || '',
+        file_url: song.file_url()
+      }
+    end
+    render json: songs
   end
 
   private

@@ -33,6 +33,20 @@ class ArtistsController < ApplicationController
     render json: {status: 'success'}
   end
 
+  def search
+    term = params[:term]
+    artists = Artist.where(name: /#{term}/i)
+    artists = artists.map do |artist|
+      {
+        id: artist.id.to_s,
+        name: artist.name,
+        small_art: artist.small_art,
+        large_art: artist.large_art
+      }
+    end
+    render json: artists
+  end
+
   private
   def artist_params
     params.require(:artist).permit(:name)

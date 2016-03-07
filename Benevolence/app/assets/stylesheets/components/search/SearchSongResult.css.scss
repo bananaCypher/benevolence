@@ -1,0 +1,20 @@
+@import '../../application';
+
+$height: 155px;
+.ReactSearchSongResult {
+  width: $height;
+  margin-bottom: 10px;
+  background-color: $dark-background-color;
+  position: relative;
+  img {
+    width: 100%;
+  }
+  img:hover {
+    & + div {
+      display: block;
+    }
+  }
+  h2, p {
+    margin: 0;
+  }
+}

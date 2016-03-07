@@ -1,0 +1,22 @@
+@import '../../application';
+
+.ReactSearchOptionGrid {
+  position: absolute;
+  width: 100%;
+  height: 155px;
+  top: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: none;
+  overflow: hidden;
+  img {
+    width: 50% !important;
+    display: inline-block;
+  }
+  img:hover {
+    background-color: rgba(0,0,0,0.4);
+    cursor: pointer;
+  }
+}
+.ReactSearchOptionGrid:hover {
+  display: block;
+}

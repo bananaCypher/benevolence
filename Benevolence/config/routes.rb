@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root 'home#index'
   scope '/api' do
     resources :songs
+    get 'songs/search/:term' => 'songs#search'
     resources :artists
+    get 'artists/search/:term' => 'artists#search'
     resources :albums
     resources :playlists
   end

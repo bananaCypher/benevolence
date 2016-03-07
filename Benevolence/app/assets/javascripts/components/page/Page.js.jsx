@@ -34,7 +34,9 @@ var Page = React.createClass({
       songs: {},
       artists: {},
       displayingSong: '',
-      displayingArtist: ''
+      displayingArtist: '',
+      showingPlaylistForm: false, 
+      songToAdd: ''
     };
   },
   componentDidMount: function(){
@@ -186,6 +188,17 @@ var Page = React.createClass({
     var artist = this.state.artists[song.artist];
     this.setState({backgroundImage: artist.largeArt})
   },
+  addToPlaylist: function(songId, playlistId){
+    var data = new FormData();
+    data.append('song', songId);
+    var request = new XMLHttpRequest();
+    request.open('PUT', '/api/playlists/' + playlistId);
+    request.send(data);
+    this.setState({showingPlaylistForm: false})
+  },
+  showPlaylistSelector: function(songId){
+    this.setState({showingPlaylistForm: true, songToAdd: songId});
+  },
   toggleMenu: function(){
     this.setState({menuShowing: !this.state.menuShowing});
   },
@@ -242,7 +255,12 @@ var Page = React.createClass({
   },
   searchPage: function(){
     return (
-      <SearchPage songPage={this.changeToSongPage} artistPage={this.changeToArtistPage} playSong={this.playSongNow}></SearchPage>
+      <SearchPage 
+        songPage={this.changeToSongPage} 
+        artistPage={this.changeToArtistPage} 
+        playSong={this.playSongNow}
+        showPlaylistForm={this.showPlaylistSelector}>
+      </SearchPage>
     )
   },
   render: function() {
@@ -290,6 +308,11 @@ var Page = React.createClass({
           home={this.showHomePage}
           search={this.showSearchPage}>
         </PageMenu>
+        <PlaylistForm 
+          showing={this.state.showingPlaylistForm}
+          addToPlaylist={this.addToPlaylist}
+          song={this.state.songToAdd}>
+        </PlaylistForm>
         <Player 
           song={this.state.currentSong}
           nextSong={this.nextSong}

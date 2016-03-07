@@ -2,7 +2,14 @@ class PlaylistsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    render json: Playlist.all
+    playlists = Playlist.all.map do |playlist|
+      {
+        id: playlist.id.to_s,
+        title: playlist.title,
+        tracks: playlist.songs.map {|s| s.id.to_s}
+      }
+    end
+    render json: playlists
   end
 
   def show
@@ -30,9 +37,12 @@ class PlaylistsController < ApplicationController
   end
 
   def update
+    song = Song.find(params[:song])
     playlist = get_playlist || return
-    playlist.update(playlist_params)
+    puts "Before Update: #{playlist.songs}"
+    playlist.songs.push(song)
     playlist.save
+    puts "After Update: #{playlist.songs}"
     render json: {status: 'success', message: 'Playlist was successfully updated'}
   end
 

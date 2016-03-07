@@ -69,7 +69,7 @@ class SongsController < ApplicationController
   end
 
   def get_linked_artist(name)
-    artists = Artist.where(name: name)
+    artists = Artist.where(name: /#{name}/i)
     if (artists.empty?)
       return scrape_artist(name)
     else

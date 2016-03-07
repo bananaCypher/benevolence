@@ -67,7 +67,10 @@ var Page = React.createClass({
       var newSongs = this.state.songs;
       newSongs[id] = songObj;
       this.setState({songs: newSongs})
-      this.getArtistData(songObj.artist);
+      var artist = this.state.artists[songObj.artist];
+      if (!artist) {
+        this.getArtistData(songObj.artist);
+      }
     }.bind(this));  
   },
   getArtistData: function(id){
@@ -169,6 +172,15 @@ var Page = React.createClass({
       shouldPlay: true
     });
   },
+  playSongNow: function(track){
+    var newPlaylist = this.state.playlistTracks;
+    newPlaylist.splice(this.state.currentIndex, 0, track);
+    this.setState({
+      playlistTracks: newPlaylist, 
+      currentSong: newPlaylist[this.state.currentIndex],
+      shouldPlay: true
+    });
+  },
   setBackgroundImage: function(){
     var song = this.state.songs[this.state.currentSong];
     var artist = this.state.artists[song.artist];
@@ -216,7 +228,7 @@ var Page = React.createClass({
     var song = this.getSong(this.state.displayingSong);
     var artist = this.state.artists[song.artist];
     return (
-      <SongPage song={song} artist={artist} artistPage={this.changeToArtistPage}></SongPage>
+      <SongPage song={song} artist={artist} artistPage={this.changeToArtistPage} playSong={this.playSongNow}></SongPage>
     )
   },
   artistPage: function(){

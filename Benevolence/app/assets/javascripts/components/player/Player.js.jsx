@@ -16,7 +16,6 @@ var Player = React.createClass({
       });
     }.bind(this)
     this.player.onended = this.next;
-    this.player.ondurationchange = this.autoplay;
   },
   componentWillReceiveProps: function(props) {
     SongHelper.get(props.song, function(details){
@@ -30,13 +29,8 @@ var Player = React.createClass({
       });
     }
   },
-  autoplay: function(){
-    if (this.state.playing == false || this.state.isLast == true) {
-      this.player.pause();
-    } else {
-      this.player.currentTime = 0;
-      this.player.play();
-    }
+  componentWillUpdate: function(nextProps, nextState){
+    this.player.autoplay = nextState.playing;
   },
   play: function() {
     this.player.play();
@@ -51,13 +45,13 @@ var Player = React.createClass({
     this.player.currentTime = 0;
   },
   next: function() {
+    this.props.nextSong();
     if (this.props.isLast == true || this.state.playing == false) {
       this.setState({playing: false});
+      this.stop();
     } else {
-      this.setState({playing: true})
       this.play();
     }
-    this.props.nextSong();
   },
   prev: function() {
     this.props.prevSong();
@@ -90,14 +84,14 @@ var Player = React.createClass({
     }
     return (
       <div className='ReactPlayer'>
-      <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
-      {shuffleButton}
-      <PlayerButton action={this.prev}>fa-step-backward</PlayerButton> 
-      {playButton}
-      <PlayerButton action={this.stop}>fa-stop</PlayerButton> 
-      <PlayerButton action={this.next}>fa-step-forward</PlayerButton> 
-      {repeatButton}
-      <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
+        <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
+        {shuffleButton}
+        <PlayerButton action={this.prev}>fa-step-backward</PlayerButton> 
+        {playButton}
+        <PlayerButton action={this.stop}>fa-stop</PlayerButton> 
+        <PlayerButton action={this.next}>fa-step-forward</PlayerButton> 
+        {repeatButton}
+        <PlayerAudio src={this.state.songUrl} playing={this.state.playing}></PlayerAudio>
       </div>
     );
   }

@@ -20,7 +20,7 @@ class Artist
     self.songs.each do |song|
       if !unique_song_titles.include? song.title.downcase
         unique_song_titles.push(song.title.downcase)
-        unique_song_ids.push(song.id.to_s)
+        unique_song_ids.push({id: song.id.to_s, title: song.title})
       end 
     end
     return unique_song_ids

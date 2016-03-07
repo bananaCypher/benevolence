@@ -33,7 +33,8 @@ var Page = React.createClass({
       backgroundImage: '/space.jpg',
       songs: {},
       artists: {},
-      displayingSong: ''
+      displayingSong: '',
+      displayingArtist: ''
     };
   },
   componentDidMount: function(){
@@ -59,6 +60,7 @@ var Page = React.createClass({
   getSongData: function(id){
     SongHelper.get(id, function(song){
       var songObj = {
+        id: id,
         title: song.title,
         artist: song.artist
       };
@@ -71,15 +73,25 @@ var Page = React.createClass({
   getArtistData: function(id){
     ArtistHelper.get(id, function(artist){
       var artistObj = {
+        id: id,
         name: artist.name,
         smallArt: artist.small_art,
-        largeArt: artist.large_art
+        largeArt: artist.large_art,
+        songs: artist.unique_songs
       };
       var newArtists = this.state.artists;
       newArtists[id] = artistObj;
       this.setState({artists: newArtists});
       this.setBackgroundImage();
     }.bind(this));  
+  },
+  getSong: function(id){
+    var song = this.state.songs[id];
+    if (song){
+      return song
+    } else {
+      this.getSongData(id);
+    }
   },
   nextSong: function(){
     var next = this.state.currentIndex + 1;
@@ -177,6 +189,9 @@ var Page = React.createClass({
   changeToSongPage: function(track){
     this.setState({page: 'song', displayingSong: track})
   },
+  changeToArtistPage: function(artist){
+    this.setState({page: 'artist', displayingArtist: artist})
+  },
   playerPage: function(){
     return (
       <PlayerPage
@@ -198,10 +213,16 @@ var Page = React.createClass({
     )
   },
   songPage: function(){
-    var song = this.state.songs[this.state.displayingSong];
+    var song = this.getSong(this.state.displayingSong);
     var artist = this.state.artists[song.artist];
     return (
-      <SongPage song={song} artist={artist}></SongPage>
+      <SongPage song={song} artist={artist} artistPage={this.changeToArtistPage}></SongPage>
+    )
+  },
+  artistPage: function(){
+    var artist = this.state.artists[this.state.displayingArtist];
+    return (
+      <ArtistPage artist={artist} songPage={this.changeToSongPage}></ArtistPage>
     )
   },
   render: function() {
@@ -218,6 +239,9 @@ var Page = React.createClass({
         break;
       case 'song':
         page = this.songPage();
+        break;
+      case 'artist':
+        page = this.artistPage();
         break;
       default:
         page = '';

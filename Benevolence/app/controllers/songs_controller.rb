@@ -1,4 +1,5 @@
 require 'net/http'
+require 'digest'
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -23,21 +24,27 @@ class SongsController < ApplicationController
 
   def create
     metadata = JSON.parse(params[:metadata])
-    begin
+    #begin
       song = Song.new(title: metadata['title'])  
       song.user = current_user
       song.save
       uploaded_file = params[:file]
+      md5 = Digest::MD5.file uploaded_file.path
       File.open(song.file_path, 'wb') do |file|
           file.write(uploaded_file.read)
+      end
+      new_md5 = Digest::MD5.file song.file_path
+      if md5 != new_md5
+        puts "prev: #{md5}, new: #{new_md5}"
+        raise
       end
       artist = get_linked_artist(metadata['artist'])
       song.artist = artist
       song.save
       render json: {status: 'success', message: 'Song was successfully created'}
-    rescue
-      render json: {status: 'error', message: 'Failed to create song'}
-    end
+    #rescue
+      #render json: {status: 'error', message: 'Failed to create song'}
+    #end
   end
 
   def update

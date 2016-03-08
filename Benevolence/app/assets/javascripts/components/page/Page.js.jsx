@@ -224,7 +224,8 @@ var Page = React.createClass({
         playlistTracks: details.tracks,
         currentSong: details.tracks[0],
         currentIndex: 0,
-        playlistID: id
+        playlistID: id,
+        page: 'player'
       }) 
     }.bind(this));
   },
@@ -266,7 +267,8 @@ var Page = React.createClass({
         setBackgroundImage={this.setBackgroundImage}
         songs={this.state.songs}
         artists={this.state.artists}
-        songPage={this.changeToSongPage}>
+        songPage={this.changeToSongPage}
+        playlistTitle={this.state.playlistTitle}>
       </PlayerPage>
     )
   },

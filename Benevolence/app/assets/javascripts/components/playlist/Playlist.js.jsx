@@ -31,6 +31,7 @@ var Playlist = React.createClass({
     }
     return (
       <div className='ReactPlaylist'>
+        <h2>{this.props.title}</h2>
         {list}
       </div>
     );

@@ -36,7 +36,8 @@ var Page = React.createClass({
       displayingSong: '',
       displayingArtist: '',
       showingPlaylistForm: false, 
-      songToAdd: ''
+      songToAdd: '',
+      usersPlaylists: []
     };
   },
   componentDidMount: function(){
@@ -48,6 +49,7 @@ var Page = React.createClass({
         currentIndex: 0
       }) 
     }.bind(this));
+    this.getPlaylists();
   },
   componentDidUpdate: function(prevProps, prevState){
     if (prevState.playlistTracks != this.state.playlistTracks) {
@@ -97,6 +99,16 @@ var Page = React.createClass({
     } else {
       this.getSongData(id);
     }
+  },
+  getPlaylists: function(){
+    var request = new XMLHttpRequest();
+    request.open('GET', '/api/playlists');
+    request.onload = function(){
+      if (request.status === 200) {
+        this.setState({usersPlaylists: JSON.parse(request.responseText)})
+      }
+    }.bind(this);
+    request.send(null);
   },
   nextSong: function(){
     var next = this.state.currentIndex + 1;
@@ -196,6 +208,15 @@ var Page = React.createClass({
     request.send(data);
     this.setState({showingPlaylistForm: false})
   },
+  createNewPlaylist: function(title) {
+    var data = new FormData();
+    data.append('title', title);
+    var request = new XMLHttpRequest();
+    request.open('POST', '/api/playlists/');
+    request.send(data);
+    this.setState({showingPlaylistForm: true})
+    this.getPlaylists();
+  },
   showPlaylistSelector: function(songId){
     this.setState({showingPlaylistForm: true, songToAdd: songId});
   },
@@ -259,7 +280,8 @@ var Page = React.createClass({
         songPage={this.changeToSongPage} 
         artistPage={this.changeToArtistPage} 
         playSong={this.playSongNow}
-        showPlaylistForm={this.showPlaylistSelector}>
+        showPlaylistForm={this.showPlaylistSelector}
+        createNewPlaylist={this.createNewPlaylist}>
       </SearchPage>
     )
   },
@@ -310,8 +332,10 @@ var Page = React.createClass({
         </PageMenu>
         <PlaylistForm 
           showing={this.state.showingPlaylistForm}
+          playlists={this.state.usersPlaylists}
           addToPlaylist={this.addToPlaylist}
-          song={this.state.songToAdd}>
+          song={this.state.songToAdd}
+          createNewPlaylist={this.createNewPlaylist}>
         </PlaylistForm>
         <Player 
           song={this.state.currentSong}

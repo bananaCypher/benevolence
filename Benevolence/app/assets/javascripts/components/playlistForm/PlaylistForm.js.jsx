@@ -1,31 +1,20 @@
 var PlaylistForm = React.createClass({
-  getInitialState: function(){
-    return({
-      playlists: []
-    })
-  },
-  componentDidMount: function(){
-    var request = new XMLHttpRequest();
-    request.open('GET', '/api/playlists');
-    request.onload = function(){
-      if (request.status === 200) {
-        this.setState({playlists: JSON.parse(request.responseText)})
-      }
-    }.bind(this);
-    request.send(null);
-  },
   getAddToPlaylist: function(playlist){
     return function(){
       this.props.addToPlaylist(this.props.song, playlist);
     }.bind(this)
   },
+  newPlaylistHandler: function(e){
+    e.preventDefault();
+    var title = e.target.getElementsByTagName('input')[0].value;
+    this.props.createNewPlaylist(title);
+  },
   render: function() {
     if (!this.props.showing) {
       return(<div></div>);
     }
-    playlistElements = this.state.playlists.map(function(playlist){
+    playlistElements = this.props.playlists.map(function(playlist){
       var addToPlaylist = this.getAddToPlaylist(playlist.id);
-      console.log(addToPlaylist);
       return(
         <li onClick={addToPlaylist}>{playlist.title}</li>
       ); 
@@ -36,6 +25,9 @@ var PlaylistForm = React.createClass({
         <ul>
           {playlistElements}
         </ul>
+        <form onSubmit={this.newPlaylistHandler}>
+          <input type='text' placeholder='Playlist title'/><button>Create new playlist</button>
+        </form>
       </div>
     );
   }

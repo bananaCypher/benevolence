@@ -26,14 +26,15 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    begin
-      playlist = Playlist.new(playlist_params)  
-      playlist.user = current_user
+    #begin
+      title = params[:title] 
+      puts "Title: #{title}"
+      playlist = Playlist.new(title: title)  
       playlist.save
       render json: {status: 'success', message: 'Playlist was successfully created'}
-    rescue
-      render json: {status: 'error', message: 'Failed to create playlist'}
-    end
+    #rescue
+      #render json: {status: 'error', message: 'Failed to create playlist'}
+    #end
   end
 
   def update

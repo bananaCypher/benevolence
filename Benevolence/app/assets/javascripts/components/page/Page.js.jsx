@@ -52,30 +52,30 @@ var Page = React.createClass({
     this.getPlaylists();
   },
   componentDidUpdate: function(prevProps, prevState){
-    if (prevState.playlistTracks != this.state.playlistTracks) {
-      for (var track of this.state.playlistTracks) {
-        this.getSongData(track);
-      }
+    for (var track of this.state.playlistTracks) {
+      this.getSongData(track);
     }
     if (prevState.currentSong != this.state.currentSong) {
       this.setBackgroundImage();
     }
   },
   getSongData: function(id){
-    SongHelper.get(id, function(song){
-      var songObj = {
-        id: id,
-        title: song.title,
-        artist: song.artist
-      };
-      var newSongs = this.state.songs;
-      newSongs[id] = songObj;
-      this.setState({songs: newSongs})
-      var artist = this.state.artists[songObj.artist];
-      if (!artist) {
-        this.getArtistData(songObj.artist);
-      }
-    }.bind(this));  
+    if(!this.state.songs[id]) {
+      SongHelper.get(id, function(song){
+        var songObj = {
+          id: id,
+          title: song.title,
+          artist: song.artist
+        };
+        var newSongs = this.state.songs;
+        newSongs[id] = songObj;
+        this.setState({songs: newSongs})
+        var artist = this.state.artists[songObj.artist];
+        if (!artist) {
+          this.getArtistData(songObj.artist);
+        }
+      }.bind(this));  
+    }
   },
   getArtistData: function(id){
     ArtistHelper.get(id, function(artist){
@@ -195,6 +195,15 @@ var Page = React.createClass({
       shouldPlay: true
     });
   },
+  playSongNext: function(track){
+    var newPlaylist = this.state.playlistTracks;
+    newPlaylist.splice(this.state.currentIndex + 1, 0, track);
+    this.setState({
+      playlistTracks: newPlaylist, 
+      currentSong: newPlaylist[this.state.currentIndex],
+      page: 'player'
+    });
+  },
   setBackgroundImage: function(){
     var song = this.state.songs[this.state.currentSong];
     var artist = this.state.artists[song.artist];
@@ -302,7 +311,8 @@ var Page = React.createClass({
         artistPage={this.changeToArtistPage} 
         playSong={this.playSongNow}
         showPlaylistForm={this.showPlaylistSelector}
-        createNewPlaylist={this.createNewPlaylist}>
+        createNewPlaylist={this.createNewPlaylist}
+        playNext={this.playSongNext}>
       </SearchPage>
     )
   },

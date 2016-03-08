@@ -63,6 +63,11 @@ var SearchPage = React.createClass({
       this.props.playNext(song);
     }.bind(this);
   },
+  getPlayLast: function(song){
+    return function(){
+      this.props.playLast(song);
+    }.bind(this);
+  },
   getArtistPage: function(artist){
     return function(){
       this.props.artistPage(artist);
@@ -76,6 +81,7 @@ var SearchPage = React.createClass({
         var songPage = this.getSongPage(result.data.id);
         var showPlaylistForm = this.getShowPlaylistForm(result.data.id);
         var playNext = this.getPlayNext(result.data.id);
+        var playLast = this.getPlayLast(result.data.id);
         results.push(
           <SearchSongResult 
             songPage={songPage} 
@@ -83,7 +89,8 @@ var SearchPage = React.createClass({
             song={result.data} 
             playNow={playNow}
             showPlaylistForm={showPlaylistForm}
-            playNext={playNext}>
+            playNext={playNext}
+            playLast={playLast}>
           </SearchSongResult>    
         )
       } 

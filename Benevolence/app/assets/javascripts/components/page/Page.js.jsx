@@ -204,6 +204,15 @@ var Page = React.createClass({
       page: 'player'
     });
   },
+  playSongLast: function(track){
+    var newPlaylist = this.state.playlistTracks;
+    newPlaylist.push(track);
+    this.setState({
+      playlistTracks: newPlaylist, 
+      currentSong: newPlaylist[this.state.currentIndex],
+      page: 'player'
+    });
+  },
   setBackgroundImage: function(){
     var song = this.state.songs[this.state.currentSong];
     var artist = this.state.artists[song.artist];
@@ -312,7 +321,8 @@ var Page = React.createClass({
         playSong={this.playSongNow}
         showPlaylistForm={this.showPlaylistSelector}
         createNewPlaylist={this.createNewPlaylist}
-        playNext={this.playSongNext}>
+        playNext={this.playSongNext}
+        playLast={this.playSongLast}>
       </SearchPage>
     )
   },

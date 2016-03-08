@@ -19,7 +19,7 @@ function shuffleArray(array) {
 var Page = React.createClass({
   getInitialState: function() {
     return {
-      playlistID: '56d4310afdc77eacb4000000',
+      playlistID: '',
       playlistTitle: '',
       playlistTracks: [],
       currentIndex: 0,
@@ -41,14 +41,6 @@ var Page = React.createClass({
     };
   },
   componentDidMount: function(){
-    PlaylistHelper.get(this.state.playlistID, function(details){
-      this.setState({
-        playlistTitle: details.title, 
-        playlistTracks: details.tracks,
-        currentSong: details.tracks[0],
-        currentIndex: 0
-      }) 
-    }.bind(this));
     this.getPlaylists();
   },
   componentDidUpdate: function(prevProps, prevState){

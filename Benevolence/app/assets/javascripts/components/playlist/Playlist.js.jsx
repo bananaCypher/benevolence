@@ -18,11 +18,12 @@ var Playlist = React.createClass({
   },
   render: function() {
     var list = [];
-    for (var track of this.props.tracks) {
+    for (var i = 0, len = this.props.tracks.length; i < len; i++) {
+      var track = this.props.tracks[i];
       var song = this.props.songs[track] || {};
       var artist = this.props.artists[song.artist] || {};
       var current = false;
-      if (this.props.current == track){
+      if (this.props.current == i){
         current = true; 
       }
       var changeTo = this.trackChangeHandler(track);

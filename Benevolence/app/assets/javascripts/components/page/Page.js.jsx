@@ -277,7 +277,7 @@ var Page = React.createClass({
   playerPage: function(){
     return (
       <PlayerPage
-        currentSong={this.state.currentSong}
+        currentSong={this.state.currentIndex}
         showingPlaylist={this.state.showingPlaylist}
         playlistTracks={this.state.playlistTracks}
         changeToTrack={this.changeToTrack}

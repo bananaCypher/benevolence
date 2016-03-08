@@ -1,0 +1,19 @@
+@import '../../application';
+
+.ReactPlaylistsPage {
+  position: absolute;
+  height: calc(100vh - #{$header-height} - #{$header-height});
+  width: 100vw;
+  top: $header-height;
+  overflow: scroll;
+  background-color: $light-background-color;
+  color: $default-color;
+  ul {
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+  }
+  li:hover {
+    background-color: $dark-background-color;
+  }
+}

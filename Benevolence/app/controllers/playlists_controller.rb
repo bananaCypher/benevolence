@@ -18,7 +18,7 @@ class PlaylistsController < ApplicationController
       song.id.to_s
     end
     return_playlist = {
-      id: playlist.id,
+      id: playlist.id.to_s,
       title: playlist.title,
       tracks: tracks
     }

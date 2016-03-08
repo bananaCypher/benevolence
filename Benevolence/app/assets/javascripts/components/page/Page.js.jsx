@@ -217,6 +217,17 @@ var Page = React.createClass({
     this.setState({showingPlaylistForm: true})
     this.getPlaylists();
   },
+  changeToPlaylist: function(id) {
+    PlaylistHelper.get(id, function(details){
+      this.setState({
+        playlistTitle: details.title, 
+        playlistTracks: details.tracks,
+        currentSong: details.tracks[0],
+        currentIndex: 0,
+        playlistID: id
+      }) 
+    }.bind(this));
+  },
   showPlaylistSelector: function(songId){
     this.setState({showingPlaylistForm: true, songToAdd: songId});
   },
@@ -234,6 +245,9 @@ var Page = React.createClass({
   },
   showSearchPage: function(){
     this.setState({page: 'search', menuShowing: false})
+  },
+  showPlaylistsPage: function(){
+    this.setState({page: 'playlists', menuShowing: false})
   },
   changeToSongPage: function(track){
     this.setState({page: 'song', displayingSong: track})
@@ -274,6 +288,11 @@ var Page = React.createClass({
       <ArtistPage artist={artist} songPage={this.changeToSongPage}></ArtistPage>
     )
   },
+  playlistsPage: function(){
+    return (
+      <PlaylistsPage playlists={this.state.usersPlaylists} changeTo={this.changeToPlaylist}></PlaylistsPage>
+    )
+  },
   searchPage: function(){
     return (
       <SearchPage 
@@ -306,6 +325,9 @@ var Page = React.createClass({
       case 'search':
         page = this.searchPage();
         break;
+      case 'playlists':
+        page = this.playlistsPage();
+        break;
       default:
         page = '';
     }
@@ -328,7 +350,8 @@ var Page = React.createClass({
           player={this.showPlayerPage} 
           upload={this.showUploadPage} 
           home={this.showHomePage}
-          search={this.showSearchPage}>
+          search={this.showSearchPage}
+          playlists={this.showPlaylistsPage}>
         </PageMenu>
         <PlaylistForm 
           showing={this.state.showingPlaylistForm}

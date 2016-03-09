@@ -19,7 +19,7 @@ function shuffleArray(array) {
 var Page = React.createClass({
   getInitialState: function() {
     return {
-      playlistID: '',
+      playlistID: localStorage.getItem('playlist'),
       playlistTitle: '',
       playlistTracks: [],
       currentIndex: 0,
@@ -42,6 +42,7 @@ var Page = React.createClass({
   },
   componentDidMount: function(){
     this.getPlaylists();
+    this.changeToPlaylist(this.state.playlistID);
   },
   componentDidUpdate: function(prevProps, prevState){
     for (var track of this.state.playlistTracks) {
@@ -238,6 +239,7 @@ var Page = React.createClass({
         page: 'player'
       }) 
     }.bind(this));
+    localStorage.setItem('playlist', id);
   },
   showPlaylistSelector: function(songId){
     this.setState({showingPlaylistForm: true, songToAdd: songId});

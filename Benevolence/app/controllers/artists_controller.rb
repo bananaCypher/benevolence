@@ -41,7 +41,8 @@ class ArtistsController < ApplicationController
         id: artist.id.to_s,
         name: artist.name,
         small_art: artist.small_art,
-        large_art: artist.large_art
+        large_art: artist.large_art,
+        songs: artist.unique_songs
       }
     end
     render json: artists

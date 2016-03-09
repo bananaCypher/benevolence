@@ -24,18 +24,10 @@ var ArtistPage = React.createClass({
       this.props.playLast(song);
     }.bind(this);
   },
-  //songPageHandler(song){
-  //  return function(){
-  //    this.props.songPage(song);
-  //  }.bind(this)
-  //},
   render: function() {
     var songElements = [];
+    console.log(this.props.artist);
     for (var song of this.props.artist.songs) {
-      //var songPage = this.songPageHandler(song.id);
-      //songElements.push(
-      //  <li><a href='#!' onClick={songPage}>{song.title}</a></li>
-      //) 
       var playNow = this.getPlayNow(song.id);
       var songPage = this.getSongPage(song.id);
       var showPlaylistForm = this.getShowPlaylistForm(song.id);

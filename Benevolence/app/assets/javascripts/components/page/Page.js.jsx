@@ -241,6 +241,16 @@ var Page = React.createClass({
     }.bind(this));
     localStorage.setItem('playlist', id);
   },
+  addArtistInfo: function(artist) {
+    var artists = this.state.artists;
+    artists[artist.id] = artist;
+    this.setState({artists: artists});
+  },
+  addSongInfo: function(song) {
+    var songs = this.state.songs;
+    songs[song.id] = song;
+    this.setState({songs: songs});
+  },
   showPlaylistSelector: function(songId){
     this.setState({showingPlaylistForm: true, songToAdd: songId});
   },
@@ -324,7 +334,9 @@ var Page = React.createClass({
         showPlaylistForm={this.showPlaylistSelector}
         createNewPlaylist={this.createNewPlaylist}
         playNext={this.playSongNext}
-        playLast={this.playSongLast}>
+        playLast={this.playSongLast}
+        addArtist={this.addArtistInfo}
+        addSong={this.addSongInfo}>
       </SearchPage>
     )
   },

@@ -19,6 +19,7 @@ var SearchPage = React.createClass({
             type: 'song',
             data: result
           })  
+          this.props.addSong(result);
         }
         this.setState({results: results})
       }
@@ -31,10 +32,18 @@ var SearchPage = React.createClass({
         response = JSON.parse(requestArtist.responseText); 
         var results = this.state.results;
         for (var result of response) {
+          var artistObj = {
+            id: result.id,
+            name: result.name,
+            small_art: result.small_art,
+            large_art: result.large_art,
+            songs: result.unique_songs
+          } 
           results.push({
             type: 'artist',
-            data: result
+            data: artistObj
           })  
+          this.props.addArtist(result);
         }
         this.setState({results: results})
       }

@@ -4,9 +4,10 @@ var SearchPage = React.createClass({
       results: []
     })
   },
-  searchHandler: function(){
+  searchHandler: function(e){
+    e.preventDefault();
     this.setState({results: []});
-    var term = this.getDOMNode().childNodes[0].value;
+    var term = e.target.childNodes[0].value;
 
     var requestSong = new XMLHttpRequest();
     requestSong.open('GET', '/api/songs/search/' + term);
@@ -112,8 +113,10 @@ var SearchPage = React.createClass({
     }
     return (
       <div className='ReactSearchPage'>
-        <input type='text'/>
-        <button onClick={this.searchHandler}><i className='fa fa-search'></i></button>
+        <form onSubmit={this.searchHandler}>
+          <input type='text' placeholder='Search'/>
+          <button><i className='fa fa-search'></i></button>
+        </form>
         <div className='ReactSearchPageResults'>
           {results}
         </div>

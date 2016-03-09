@@ -8,6 +8,9 @@
   background-color: $light-background-color;
   overflow: scroll;
   color: $default-color;
+  div:nth-of-type(odd) {
+    background-color: $light-background-color;
+  }
 }
 @media only screen and (min-width: 800px) {
   .ReactPlaylist {

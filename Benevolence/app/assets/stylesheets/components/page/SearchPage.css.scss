@@ -1,5 +1,6 @@
 @import '../../application';
 
+$form-height: 39px;
 .ReactSearchPage {
   position: absolute;
   height: calc(100vh - #{$header-height} - #{$header-height});
@@ -8,6 +9,23 @@
   overflow: scroll;
   background-color: $light-background-color;
   color: $default-color;
+  form {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    input {
+      height: $form-height;
+      width: 300px;
+      font-size: 2em;
+    }
+    button {
+      border-radius: 0px;
+      background-color: white;
+      border: 0;
+      height: calc(#{$form-height} + 6px);
+      font-size: 2em;
+    }
+  }
 }
 
 .ReactSearchPageResults {

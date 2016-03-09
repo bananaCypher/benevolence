@@ -48,7 +48,6 @@ var ArtistPage = React.createClass({
       <div className='ReactArtistPage'>
         <img src={this.props.artist.small_art}/>
         <h2>{this.props.artist.name}</h2>
-        <b>Songs:- </b>
         <div className='ReactArtistPageSongs'>
           {songElements}
         </div>

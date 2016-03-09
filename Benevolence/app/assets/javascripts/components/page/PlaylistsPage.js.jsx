@@ -8,7 +8,7 @@ var PlaylistsPage = React.createClass({
     var playlistElements = this.props.playlists.map(function(playlist){
       var changeTo = this.getPlaylistChange(playlist.id);
       return(
-        <li>{playlist.title} <button onClick={changeTo}><i className='fa fa-play'></i></button></li>
+        <li><button onClick={changeTo}><i className='fa fa-play'></i></button> {playlist.title}</li>
       );
     }.bind(this));
     return (

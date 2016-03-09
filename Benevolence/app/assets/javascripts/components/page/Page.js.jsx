@@ -254,6 +254,9 @@ var Page = React.createClass({
   showPlaylistSelector: function(songId){
     this.setState({showingPlaylistForm: true, songToAdd: songId});
   },
+  closePlaylistForm: function(){
+    this.setState({showingPlaylistForm: false});
+  },
   toggleMenu: function(){
     this.setState({menuShowing: !this.state.menuShowing});
   },
@@ -394,7 +397,8 @@ var Page = React.createClass({
           playlists={this.state.usersPlaylists}
           addToPlaylist={this.addToPlaylist}
           song={this.state.songToAdd}
-          createNewPlaylist={this.createNewPlaylist}>
+          createNewPlaylist={this.createNewPlaylist}
+          close={this.closePlaylistForm}>
         </PlaylistForm>
         <Player 
           song={this.state.currentSong}

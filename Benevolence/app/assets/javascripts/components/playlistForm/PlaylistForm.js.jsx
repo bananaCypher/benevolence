@@ -21,6 +21,7 @@ var PlaylistForm = React.createClass({
     }.bind(this)); 
     return (
       <div className='ReactPlaylistForm'>
+        <button onClick={this.props.close}><i className='fa fa-times'></i></button>
         <h1>Playlists</h1>
         <ul>
           {playlistElements}

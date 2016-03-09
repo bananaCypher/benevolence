@@ -12,6 +12,10 @@ var PlayerTrack = React.createClass({
   render: function() {
     return (
       <div className='ReactPlayerTrack' onClick={this.trackClick} id='player-track'>
+        <PlayerBuffer 
+          buffered={this.props.buffered}
+          duration={this.props.duration}>
+        </PlayerBuffer>
         <PlayerPointer 
           position={this.props.position} 
           duration={this.props.duration}

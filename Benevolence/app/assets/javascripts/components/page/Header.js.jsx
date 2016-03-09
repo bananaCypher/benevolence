@@ -6,7 +6,7 @@ var Header = React.createClass({
     }
     return (
       <div className='ReactHeader'>
-        <img src='/logo.png'/>
+        <img src='/BananaCypher.PNG'/>
         <PageMenuButton toggleMenu={this.props.toggleMenu}></PageMenuButton>
         <h2>{title}</h2>
       </div>

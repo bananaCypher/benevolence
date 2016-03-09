@@ -6,7 +6,7 @@ var PlaylistElement = React.createClass({
     }
     return (
       <div className={classList}>
-        <img src={this.props.artist.smallArt} onClick={this.props.changeTo}/>
+        <img src={this.props.artist.small_art} onClick={this.props.changeTo}/>
         <div onClick={this.props.changeTo}></div>
         <h3 onClick={this.props.songPage}>{this.props.song.title} <small>{this.props.artist.name}</small></h3>
       </div>

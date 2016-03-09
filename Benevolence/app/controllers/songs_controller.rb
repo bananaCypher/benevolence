@@ -24,7 +24,7 @@ class SongsController < ApplicationController
 
   def create
     metadata = JSON.parse(params[:metadata])
-    #begin
+    begin
       song = Song.new(title: metadata['title'])  
       song.user = current_user
       song.save
@@ -42,9 +42,9 @@ class SongsController < ApplicationController
       song.artist = artist
       song.save
       render json: {status: 'success', message: 'Song was successfully created'}
-    #rescue
-      #render json: {status: 'error', message: 'Failed to create song'}
-    #end
+    rescue
+      render json: {status: 'error', message: 'Failed to create song'}
+    end
   end
 
   def update

@@ -4,7 +4,8 @@ var Player = React.createClass({
       songUrl: '',
       songPosition: 0,
       songDuration: 200,
-      playing: false
+      playing: false,
+      buffered: 0
     }
   },
   componentDidMount(){
@@ -12,8 +13,9 @@ var Player = React.createClass({
     this.player.ontimeupdate = function(){
       this.setState({
         songPosition: this.player.currentTime,
-        songDuration: this.player.duration
+        songDuration: this.player.duration,
       });
+      this.setBuffered();
     }.bind(this)
     this.player.onended = this.next;
   },
@@ -31,6 +33,13 @@ var Player = React.createClass({
   },
   componentWillUpdate: function(nextProps, nextState){
     this.player.autoplay = nextState.playing;
+  },
+  setBuffered: function(){
+    var duration =  this.player.duration;
+    if (duration > 0) {
+      var bufferedEnd = this.player.buffered.end(this.player.buffered.length - 1); 
+      this.setState({buffered: bufferedEnd});
+    }
   },
   play: function() {
     this.player.play();
@@ -84,7 +93,12 @@ var Player = React.createClass({
     }
     return (
       <div className='ReactPlayer'>
-        <PlayerTrack seek={this.seek} position={this.state.songPosition} duration={this.state.songDuration}></PlayerTrack>
+        <PlayerTrack
+          seek={this.seek} 
+          position={this.state.songPosition} 
+          duration={this.state.songDuration} 
+          buffered={this.state.buffered}>
+        </PlayerTrack>
         {shuffleButton}
         <PlayerButton action={this.prev}>fa-step-backward</PlayerButton> 
         {playButton}

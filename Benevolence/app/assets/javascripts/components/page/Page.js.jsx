@@ -74,8 +74,8 @@ var Page = React.createClass({
       var artistObj = {
         id: id,
         name: artist.name,
-        smallArt: artist.small_art,
-        largeArt: artist.large_art,
+        small_art: artist.small_art,
+        large_art: artist.large_art,
         songs: artist.unique_songs
       };
       var newArtists = this.state.artists;
@@ -208,7 +208,7 @@ var Page = React.createClass({
   setBackgroundImage: function(){
     var song = this.state.songs[this.state.currentSong];
     var artist = this.state.artists[song.artist];
-    this.setState({backgroundImage: artist.largeArt})
+    this.setState({backgroundImage: artist.large_art})
   },
   addToPlaylist: function(songId, playlistId){
     var data = new FormData();
@@ -297,8 +297,16 @@ var Page = React.createClass({
   artistPage: function(){
     var artist = this.state.artists[this.state.displayingArtist];
     return (
-      <ArtistPage artist={artist} songPage={this.changeToSongPage}></ArtistPage>
-    )
+      <ArtistPage 
+        artist={artist} 
+        songPage={this.changeToSongPage}
+        playSong={this.playSongNow}
+        showPlaylistForm={this.showPlaylistSelector}
+        createNewPlaylist={this.createNewPlaylist}
+        playNext={this.playSongNext}
+        playLast={this.playSongLast}>
+      </ArtistPage>
+    );
   },
   playlistsPage: function(){
     return (

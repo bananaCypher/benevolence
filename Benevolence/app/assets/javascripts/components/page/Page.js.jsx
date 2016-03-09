@@ -218,6 +218,13 @@ var Page = React.createClass({
     request.open('PUT', '/api/playlists/' + playlistId);
     request.send(data);
     this.setState({showingPlaylistForm: false})
+    var not = new Notification(document.getElementById('notification-area'), {
+      title: 'Song added to Playlist',
+      content: 'Successfully added the song to the playlist.',
+      type: 'success',
+      duration: 10000
+    });
+    console.log(not);
   },
   createNewPlaylist: function(title) {
     var data = new FormData();
@@ -378,6 +385,7 @@ var Page = React.createClass({
     return (
       <div className='ReactPage'>
         <BackgroundImage src={this.state.backgroundImage}></BackgroundImage>
+        <NotificationArea></NotificationArea>
         <Header 
           toggleMenu={this.toggleMenu} 
           artist={artist}

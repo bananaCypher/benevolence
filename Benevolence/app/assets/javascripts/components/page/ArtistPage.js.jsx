@@ -26,7 +26,6 @@ var ArtistPage = React.createClass({
   },
   render: function() {
     var songElements = [];
-    console.log(this.props.artist);
     for (var song of this.props.artist.songs) {
       var playNow = this.getPlayNow(song.id);
       var songPage = this.getSongPage(song.id);

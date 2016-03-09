@@ -1,0 +1,33 @@
+@import '../../application';
+
+.ReactNotificationArea {
+  position: absolute;
+  width: 300px;
+  z-index: 150;
+  h2 {
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
+  span {
+    float: right;
+    cursor: pointer;
+  }
+}
+
+.notification-info {
+  padding: 5px;
+  background-color: lightblue;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px #000000;
+}
+
+.notification-success {
+  padding: 5px;
+  background-color: lightgreen;
+  color: darkgreen;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px #000000;
+}
